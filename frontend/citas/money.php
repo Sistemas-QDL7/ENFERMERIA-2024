@@ -3,8 +3,7 @@
      session_start();
     
     if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
-    header('location: ../login.php');
-
+        header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
     $id=$_SESSION['id'];
   }
 ?>
