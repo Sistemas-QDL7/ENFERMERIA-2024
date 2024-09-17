@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;800&display=swap");
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-clr: #f4f9ff;
+  --fg-clr: #1b1c40;
+  --form-bg: #ffffff;
+  --fb-bg: #4968ad;
+  --btn-fg: #fff;
+  --input-border: #c8d1e5;
+  --divider: #000000;
+  --submit-bg: #1e2c4b;
+
+  --form-radius: 20px;
+  --btn-radius: 5px;
+}
+
+body {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-clr);
+  font-family: "Mulish", sans-serif;
+}
+
+
+
+.form-container {
+  background: var(--form-bg);
+  width: 95%;
+  border-radius: var(--form-radius);
+  padding: 3em;
+  text-align: center;
+  box-shadow: 0px 22px 35px rgba(5, 27, 105, 0.12);
+}
+
+.heading {
+  color: var(--fg-clr);
+  margin-bottom: 1em;
+}
+
+.sub-heading {
+  color: var(--fg-clr);
+  margin-bottom: 1em;
+  font-weight: 600;
+}
+
+.btn {
+  display: block;
+  color: var(--btn-fg);
+  text-decoration: none;
+  padding: 1em;
+  border-radius: var(--btn-radius);
+  font-weight: 800;
+}
+
+.btn-facebook {
+  background: var(--fb-bg);
+  margin-bottom: 1em;
+}
+
+.divider {
+  color: var(--divider);
+  margin: 1em;
+  font-weight: 800;
+}
+
+form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+}
+
+.form-input {
+  border: 2px solid var(--input-border);
+  outline: none;
+  font-family: inherit;
+  background: transparent;
+  color: var(--fg-clr);
+  padding: 1em;
+  width: 100%;
+  border-radius: var(--btn-radius);
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.submit-btn {
+  background: var(--submit-bg);
+  cursor: pointer;
+}
+
+.btm-line {
+  margin: 2em auto;
+  width: 60%;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 600px) {
+  .form-container {
+    width: 75%;
+  }
+}
+
+@media (min-width: 900px) {
+  .form-container {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .form-container {
+    width: 40%;
+  }
+}
+@media (min-width: 1270px) {
+  .form-container {
+    width: 30%;
+  }
+}
