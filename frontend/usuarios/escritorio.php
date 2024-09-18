@@ -50,12 +50,12 @@ $events = $req->fetchAll();
     <section id="sidebar">
         <a href="escritorio.php" class="brand"><i class='bx bxs-heart icon'></i> ENFERMERÍA QDL</a>
         <ul class="side-menu">
-            <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+            <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
-                <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-book-alt icon' ></i> Consulta <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../citas/mostrar.php">Todas las citas</a></li>
+                    <li><a href="../citas/mostrar.php">Todas las Consultas</a></li>
                     <li><a href="../citas/nuevo.php">Nueva</a></li>
                     
                    
@@ -66,45 +66,23 @@ $events = $req->fetchAll();
                 <a href="#"><i class='bx bxs-user icon' ></i> Empleados <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../pacientes/mostrar.php">Lista de Empleados</a></li>
-                    <li><a href="../pacientes/pagos.php">Pagos</a></li>
                     <li><a href="../pacientes/historial.php">Historial de los Empleados</a></li>
                     <li><a href="../pacientes/documentos.php">Documentos</a></li>
                    
                 </ul>
             </li>
 
-            <li>
-                <a href="#"><i class='bx bxs-briefcase icon' ></i> Personal <i class='bx bx-chevron-right icon-right' ></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="../medicos/mostrar.php">Lista de Personal</a></li>
-                    <li><a href="../medicos/historial.php">Historial de los Personal</a></li>
-                   
-                </ul>
-            </li>
+            
 
 
-            <li>
-                <a href="#"><i class='bx bxs-user-pin icon' ></i> Recursos humanos<i class='bx bx-chevron-right icon-right' ></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="../recursos/enfermera.php">Enfermera</a></li>
-                    <li><a href="../recursos/laboratiorios.php">Laboratorios</a></li>
-                    
-                </ul>
-            </li>
+            
 
-            <li>
-                <a href="#"><i class='bx bxs-diamond icon' ></i> Actividades financieras<i class='bx bx-chevron-right icon-right' ></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="../actividades/mostrar.php">Pagos</a></li>
-                    <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
-                   
-                </ul>
-            </li>
+            
 
             <li>
                 <a href="#"><i class='bx bxs-spray-can icon' ></i> Medicamentos<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../medicinas/venta.php">Vender</a></li>
+                    
                     <li><a href="../medicinas/mostrar.php">Listado</a></li>
                     <li><a href="../medicinas/nuevo.php">Nueva</a></li>
                     <li><a href="../medicinas/categoria.php">Categoria</a></li>
@@ -148,7 +126,7 @@ $events = $req->fetchAll();
             <div class="profile">
                 <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
                 <ul class="profile-link">
-                    <li><a href="../profile/mostrar.php"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
+                    
                     
                     <li>
                      <a href="../salir.php"><i class='bx bxs-log-out-circle' ></i> Logout</a>
@@ -196,7 +174,7 @@ $events = $req->fetchAll();
 
                                              ?>
                             <h2><?php echo  $total; ?></h2>
-                            <p>Medicos</p>
+                            <p>Enfermeros</p>
                         </div>
                         <i class='bx bx-briefcase icon' ></i>
                     </div>
@@ -206,13 +184,13 @@ $events = $req->fetchAll();
                     <div class="head">
                         <div>
                             <?php 
-                                            $sql = "SELECT COUNT(*) total FROM users";
+                                            $sql = "SELECT COUNT(*) total FROM product";
                                             $result = $connect->query($sql); //$pdo sería el objeto conexión
                                             $total = $result->fetchColumn();
 
                                              ?>
                             <h2><?php echo  $total; ?></h2>
-                            <p>Usuarios</p>
+                            <p>Medicamentos y Material</p>
                         </div>
                         <i class='bx bx-user-circle icon' ></i>
                     </div>
@@ -222,13 +200,24 @@ $events = $req->fetchAll();
                     <div class="head">
                         <div>
                             <?php 
-                                            $sql = "SELECT SUM(monto) total FROM events";
+                                            $sql = "SELECT nompro, stock FROM product ORDER BY stock ASC LIMIT 1";
                                             $result = $connect->query($sql); //$pdo sería el objeto conexión
-                                            $total = $result->fetchColumn();
+                                            // Usamos fetch() para obtener ambos valores
+                                            $row = $result->fetch(PDO::FETCH_ASSOC);
 
+                                            if ($row) {
+                                                // Asignar los valores a variables separadas
+                                                $nombreProducto = $row['nompro'];
+                                                $stockProducto = $row['stock'];
+                                            } else {
+                                                // Si no hay resultados, asignar valores por defecto
+                                                $nombreProducto = "No disponible";
+                                                $stockProducto = "N/A";
+                                            }
+                                        
                                              ?>
-                            <h2>S/.<?php echo  $total; ?></h2>
-                            <p>Citas</p>
+                            <h2><?php echo htmlspecialchars($stockProducto); ?></h2>
+                            <p><?php echo htmlspecialchars($nombreProducto); ?></p>
                         </div>
                         <i class='bx bx-book-alt icon' ></i>
                     </div>
@@ -238,37 +227,53 @@ $events = $req->fetchAll();
             <div class="data">
                 <div class="content-data">
 <div class="table-responsive" style="overflow-x:auto;">
- <?php 
-
-$sentencia = $connect->prepare("SELECT * FROM doctor ORDER BY idodc DESC LIMIT 10;");
- $sentencia->execute();
-$data =  array();
-if($sentencia){
-  while($r = $sentencia->fetchObject()){
-    $data[] = $r;
-  }
-}
-     ?>
-     <?php if(count($data)>0):?>
-         <table id="example" class="responsive-table">
+    <?php 
+        // Modificar la consulta para obtener las columnas nompa, apepa y numhs de la tabla patients
+        $sentencia = $connect->prepare("
+            SELECT events.*, patients.nompa, patients.apepa, patients.numhs 
+            FROM events 
+            JOIN patients ON events.idpa = patients.idpa
+            ORDER BY events.id DESC 
+            LIMIT 10;
+        ");
+        $sentencia->execute();
+        $data = array();
+        if($sentencia){
+            while($r = $sentencia->fetchObject()){
+                $data[] = $r;
+            }
+        }
+    ?>
+    
+    <?php if(count($data) > 0): ?>
+        <table id="example" class="responsive-table">
             <thead>
                 <tr>
-                    <th scope="col">Nuevos médicos</th>
-                    
+                    <th scope="col">Motivo de consulta</th>
+                    <th scope="col">Nombre del Paciente</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Número de control</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($data as $d):?>
+                <?php foreach($data as $d): ?>
                     <tr>
-                    
-                        <td data-title="Paciente"><?php echo $d->nodoc ?>&nbsp;<?php echo $d->apdoc ?></td>
-                        <td data-title="Especialidad"><?php echo $d->nomesp ?></td>
-                      
+                        <!-- Mostrar el título y el idodc del evento -->
+                        <td data-title="Consulta"><?php echo $d->title ?>&nbsp;<?php echo $d->idodc ?></td>
+                        
+                        <!-- Mostrar el nombre del paciente -->
+                        <td data-title="Nombre"><?php echo $d->nompa ?></td>
+                        
+                        <!-- Mostrar el apellido paterno del paciente -->
+                        <td data-title="Apellido"><?php echo $d->apepa ?></td>
+                        
+                        <!-- Mostrar el número de historia clínica del paciente -->
+                        <td data-title="Historia Clínica"><?php echo $d->numhs ?></td>
                     </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
             </tbody>
-         </table> 
-         <?php else:?>
+        </table>
+    <?php else: ?>
   
     <div class="alert">
       <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
@@ -326,17 +331,7 @@ if($sentencia){
                 </div>
             </div>
 
-            <div class="data">
-                <div class="content-data">
-                    <div class="head">
-                        <h3>Calendario</h3>
-                       
-                    </div>
-                    <div id="calendar" class="col-centered">
-                       
-                    </div>
-                </div>
-            </div>
+            
         </main>
         <!-- MAIN -->
     </section>

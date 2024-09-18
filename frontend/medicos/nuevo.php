@@ -187,18 +187,7 @@
     <label for="psw"><b>Especialidad del médico</b></label><span class="badge-warning">*</span>
     <select required name="espm" id="espm">
         <option>Seleccione</option>
-        <option value="Pediatría">Pediatría</option>
-        <option value="Rehabilitación">Rehabilitación</option>
-        <option value="Endocrinología">Endocrinología</option>
-        <option value="Cardiología">Cardiología</option>
-        <option value="Dermatología">Dermatología</option>
-        <option value="Gastroenterología">Gastroenterología</option>
-        <option value="Psiquiatría">Psiquiatría</option>
-        <option value="Neurología">Neurología</option>
-        <option value="Neumología">Neumología</option>
-        <option value="Reumatología">Reumatología</option>
-        <option value="Hematología">Hematología</option>
-        <option value="Oncología">Oncología</option>
+        <option value="ENFERMERIA">ENFERMERIA</option>
     </select>
 
 

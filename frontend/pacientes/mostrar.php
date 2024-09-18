@@ -2,7 +2,7 @@
     ob_start();
      session_start();
     
-    if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
+     if(!isset($_SESSION['rol']) || ($_SESSION['rol'] != 1 && $_SESSION['rol'] != 2)){
         header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
     $id=$_SESSION['id'];
   }
@@ -208,7 +208,7 @@ if($sentencia){
                             <a title="Actualizar" href="../pacientes/editar.php?id=<?php echo $d->idpa ?>" class="fa fa-pencil tooltip"></a>
                             <a title="Información" href="../pacientes/info.php?id=<?php echo $d->idpa ?>" class="fa fa-info"></a>
                             <a title="Historial médico" href="../pacientes/historia.php?id=<?php echo $d->idpa ?>" class="fa fa-stethoscope"></a>
-                            <a title="Pagos" href="../pacientes/pago.php?id=<?php echo $d->idpa ?>" class="fa fa-money"></a>
+                            
                             
                             <form  onsubmit="return confirm('Realmente desea eliminar el registro?');" method='POST' action='<?php $_SERVER['PHP_SELF'] ?>'>
 <input type='hidden' name='idpa' value="<?php echo  $d->idpa; ?>">
@@ -217,7 +217,7 @@ if($sentencia){
 </form>
 
                             <?php 
-                                if ($d->rol == '2') {
+                                if ($d->rol == '1') {
                                     // code...
                 echo '<a title="Cambiar contraseña"  href="../pacientes/password.php?id='.$d->idpa.'" class="fa fa-key"></a>';
                                 }else {

@@ -3,11 +3,30 @@
      session_start();
     
     if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
-    header('location: ../login.php');
+        header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
 
     $id=$_SESSION['id'];
   }
 ?>
+<?php
+    require_once('../../backend/bd/Conexion.php');
+
+    // Asumimos que $userId es el ID del usuario que inició sesión
+    $userId = $_SESSION['id'];
+
+    // Modificar la consulta para filtrar por el ID del usuario actual
+    $stmt = $connect->prepare('SELECT * FROM users WHERE id = :userId');
+    $stmt->execute(array(':userId' => $userId));
+
+    // Obtener los datos del usuario
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$user) {
+        echo "No se encontraron datos para este usuario.";
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -248,5 +267,3 @@ if($sentencia){
   <?php include_once '../../backend/php/upd_pass.php' ?>
 </body>
 </html>
-
-

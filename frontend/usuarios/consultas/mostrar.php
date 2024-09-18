@@ -2,7 +2,7 @@
     ob_start();
      session_start();
     
-     if(!isset($_SESSION['rol']) || ($_SESSION['rol'] != 1 && $_SESSION['rol'] != 2)){
+    if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
         header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
 
     $id=$_SESSION['id'];
@@ -18,9 +18,9 @@
     <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/ico.svg">
 
     <!-- Data Tables -->
-    <link rel="stylesheet" type="text/css" href="../../backend/css/datatable.css">
-    <link rel="stylesheet" type="text/css" href="../../backend/css/buttonsdataTables.css">
-    <link rel="stylesheet" type="text/css" href="../../backend/css/font.css">
+    <link rel="stylesheet" type="text/css" href="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/css/datatable.css">
+    <link rel="stylesheet" type="text/css" href="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/css/buttonsdataTables.css">
+    <link rel="stylesheet" type="text/css" href="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/css/font.css">
 
 
 
@@ -56,16 +56,42 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="#"><i class='bx bxs-briefcase icon' ></i> Médicos <i class='bx bx-chevron-right icon-right' ></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="../medicos/mostrar.php">Lista de médicos</a></li>
+                    <li><a href="../medicos/historial.php">Historial de los médicos</a></li>
+                   
+                </ul>
+            </li>
 
-          
+
+
+            <li>
+                <a href="#"><i class='bx bxs-user-pin icon' ></i> Recursos humanos<i class='bx bx-chevron-right icon-right' ></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="../recursos/enfermera.php">Enfermera</a></li>
+                    <li><a href="../recursos/laboratiorios.php">Laboratorios</a></li>
+                    
+                </ul>
+            </li>
+
+            <li>
+                <a href="#"><i class='bx bxs-diamond icon' ></i> Actividades financieras<i class='bx bx-chevron-right icon-right' ></i></a>
+                <ul class="side-dropdown">
+                    <li><a href="../actividades/mostrar.php">Pagos</a></li>
+                    <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
+                   
+                </ul>
+            </li>
 
             <li>
                 <a href="#"><i class='bx bxs-spray-can icon' ></i> Medicina<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    
+                    <li><a href="../medicinas/venta.php">Vender</a></li>
                     <li><a href="../medicinas/mostrar.php">Listado</a></li>
                     <li><a href="../medicinas/nuevo.php">Nueva</a></li>
-                    
+                    <li><a href="../medicinas/categoria.php">Categoria</a></li>
 
                 </ul>
             </li>
