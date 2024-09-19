@@ -124,12 +124,12 @@ $events = $req->fetchAll();
            
             <span class="divider"></span>
             <div class="profile">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+                <img src="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/img/neu.png" alt="">
                 <ul class="profile-link">
                     
                     
                     <li>
-                     <a href="../salir.php"><i class='bx bxs-log-out-circle' ></i> Logout</a>
+                     <a href="../salir.php"><i class='bx bxs-log-out-circle' ></i> Cerrar sesión</a>
                     </li>
                    
                 </ul>
@@ -139,7 +139,7 @@ $events = $req->fetchAll();
 
         <!-- MAIN -->
         <main>
-            <h1 class="title">Bienvenido <?php echo '<strong>'.$_SESSION['username'].'</strong>'; ?></h1>
+            <h1 class="title">Bienvenido(a) <?php echo '<strong>'.$_SESSION['name'].'</strong>'; ?></h1>
             <ul class="breadcrumbs">
                 <li><a href="escritorio.php">Home</a></li>
                 <li class="divider">/</li>
