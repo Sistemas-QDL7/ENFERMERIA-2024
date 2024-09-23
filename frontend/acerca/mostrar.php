@@ -27,7 +27,7 @@
     
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="../admin/escritorio.php" class="brand"><i class='bx bxs-heart icon'></i> Enfermería QDL</a>
+        <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
             <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
             <li class="divider" data-text="main">Main</li>
@@ -36,7 +36,7 @@
                 <ul class="side-dropdown">
                     <li><a href="../citas/mostrar.php">Todas las citas</a></li>
                     <li><a href="../citas/nuevo.php">Nueva</a></li>
-                    <li><a href="../citas/calendario.php">Calendario</a></li>
+                    
                    
                 </ul>
             </li>

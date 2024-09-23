@@ -23,7 +23,8 @@ $events = $req->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../backend/css/admin.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/QDL.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/ico.svg">
+
 
     <!-- Data Tables -->
         <link rel="stylesheet" href="../../backend/vendor/datatables/dataTables.bs4.css" />
@@ -48,7 +49,7 @@ $events = $req->fetchAll();
     
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="escritorio.php" class="brand"><i class='bx bxs-heart icon'></i> ENFERMERÍA QDL</a>
+        <a href="escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
             <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
@@ -124,7 +125,7 @@ $events = $req->fetchAll();
            
             <span class="divider"></span>
             <div class="profile">
-                <img src="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/img/neu.png" alt="">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUqRSSeB-qxBHux7Hn4hsf94d1-nBkT6XmQ&s" alt="">
                 <ul class="profile-link">
                     
                     

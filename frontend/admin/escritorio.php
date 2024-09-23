@@ -24,7 +24,7 @@ $events = $req->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../backend/css/admin.css">
-    <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/QDL.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/ico.svg">
 
     <!-- Data Tables -->
         <link rel="stylesheet" href="../../backend/vendor/datatables/dataTables.bs4.css" />
@@ -42,14 +42,14 @@ $events = $req->fetchAll();
         margin: 0 auto;
     }
         </style>
-
+    <link rel="icon" href="D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/img/cccc.jpg" type="image/png">
     <title>ENFERMERÍA QDL | Panel administrativo</title>
 </head>
 <body>
     
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="escritorio.php" class="brand"><i class='bx bxs-heart icon'></i> ENFERMERÍA QDL</a>
+        <a href="escritorio.php" class="brand">ENFERMERÍA QDL</a>
         <ul class="side-menu">
             <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
             <li class="divider" data-text="main">Main</li>
@@ -58,7 +58,7 @@ $events = $req->fetchAll();
                 <ul class="side-dropdown">
                     <li><a href="../citas/mostrar.php">Todas las citas</a></li>
                     <li><a href="../citas/nuevo.php">Nueva</a></li>
-                    <li><a href="../citas/calendario.php">Calendario</a></li>
+                    
                    
                 </ul>
             </li>
@@ -147,7 +147,7 @@ $events = $req->fetchAll();
            
             <span class="divider"></span>
             <div class="profile">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUqRSSeB-qxBHux7Hn4hsf94d1-nBkT6XmQ&s/neu.png" alt="">
                 <ul class="profile-link">
                     <li><a href="../profile/mostrar.php"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
                     

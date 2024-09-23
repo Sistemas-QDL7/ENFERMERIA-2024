@@ -10,7 +10,7 @@ $pdf = new FPDF('P', 'mm', array(80, 130));
 $pdf->AddPage(); 
 
 // Agregar logo y ajustar su posición
-$pdf->Image('D:/QDLTraba/Documentos/Programs/XAMPP/htdocs/enfermeria/backend/img/neu.png', 25, 2, 30); // Logo
+$pdf->Image('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUqRSSeB-qxBHux7Hn4hsf94d1-nBkT6XmQ&s', 25, 2, 30); // Logo
 
 // Encabezado
 $pdf->SetFont('Arial', 'B', 8);   

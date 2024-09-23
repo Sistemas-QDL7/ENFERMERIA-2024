@@ -46,7 +46,7 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="escritorio.php" class="brand"><i class='bx bxs-heart icon'></i> ENFERMERÍA QDL</a>
+        <a href="escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
             <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
@@ -119,7 +119,7 @@
             </form>
             <span class="divider"></span>
             <div class="profile">
-                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUqRSSeB-qxBHux7Hn4hsf94d1-nBkT6XmQ&s/neu.png" alt="">
                 <ul class="profile-link">
                     <li><a href="../profile/mostrar.php"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
                     <li><a href="../salir.php"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
