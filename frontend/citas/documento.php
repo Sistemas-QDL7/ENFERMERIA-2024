@@ -8,30 +8,25 @@ class PDF extends FPDF
     // Cabecera de página
     function Header()
     {
-        // Agregar logo
-        //$this->Image('../../backend/img/ico.png', 25, 5, 33);
-
         // Texto del encabezado
         $this->setY(12);
         $this->setX(10);
         $this->SetFont('times', 'B', 13);
         $this->Text(25, 15, utf8_decode('Enfermería QDL'));
 
-        // Responsable desde la sesión
-        $this->Text(25, 20, utf8_decode('Imprimió: ' . $_SESSION['name']));
-        $this->Text(25, 25, utf8_decode('Tel: 625 581 9191 ext. 290'));
-        $this->Text(25, 30, utf8_decode('Correo: ' . $_SESSION['email']));
+        // Teléfono
+        $this->Text(25, 20, utf8_decode('Tel: 625 581 9191 ext. 290'));
 
-        // Imagen extra (si es necesario)
+        // Imagen
         $this->Image('../../backend/img/neu.png', 130, 1, 70);
 
-        // Información de fecha
+        // Fecha
         $this->SetFont('Arial', 'B', 10);    
         $this->Text(10, 48, utf8_decode('Fecha:'));
         $this->SetFont('Arial', '', 10);    
         $this->Text(25, 48, date('d/m/Y'));
 
-        // Aquí se agrega el responsable de la consulta (se completa luego en el cuerpo del PDF)
+        // Responsable de la consulta (se completa en el cuerpo del PDF)
         $this->SetFont('Arial', 'B', 10);    
         $this->Text(10, 54, utf8_decode('Responsable:     '));
     }
@@ -44,7 +39,11 @@ class PDF extends FPDF
         $this->Cell(95, 5, utf8_decode('Página ').$this->PageNo().' / {nb}', 0, 0, 'L');
         $this->Cell(95, 5, date('d/m/Y | g:i:a') , 0, 1, 'R');
         $this->Line(10, 287, 200, 287);
-        $this->Cell(0, 5, utf8_decode("QUESERÍA DOS LAGUNAS S.A. de C.V."), 0, 0, "C");
+        
+        // Añadir los datos que quitamos del encabezado
+        $this->Cell(0, 5, utf8_decode("QUESERÍA DOS LAGUNAS S.A. de C.V."), 0, 1, "C");
+        $this->Cell(0, 5, utf8_decode('Imprimió: ' . $_SESSION['name']), 0, 1, 'C');
+        $this->Cell(0, 5, utf8_decode('Correo: ' . $_SESSION['email']), 0, 0, 'C');
     }
 }
 
@@ -90,13 +89,18 @@ while ($row = $stmt->fetch()) {
     $pdf->Ln(10); // Salto de línea antes de la nueva tabla
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(100, 7, utf8_decode('Descripción'), 1, 0, 'C', 0);
-    $pdf->Cell(50, 7, utf8_decode('Mediacamentos'), 1, 1, 'C', 0);
+    $pdf->Cell(50, 7, utf8_decode('Medicamentos'), 1, 1, 'C', 0);
 
     // Datos de la tabla del monto
     $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(100, 7, utf8_decode('Consulta médica'), 1, 0, 'L', 0); // Aquí puedes ajustar la descripción según tus necesidades
+    $pdf->Cell(100, 7, utf8_decode('Consulta médica'), 1, 0, 'L', 0); 
     $pdf->Cell(50, 7,  utf8_decode($row['monto']), 1, 1, 'R', 0);
+
+    // Construir el nombre del archivo usando nompa, apepa y numhs
+    $fileName = 'receta_' . $row['nompa'] . ' ' . $row['apepa'] . '_' . $row['numhs'] . '.pdf';
 }
 
-$pdf->Output('boleta.pdf', 'D');
+// Guardar el archivo PDF con el nombre generado
+$pdf->Output($fileName, 'D');
 ?>
+
