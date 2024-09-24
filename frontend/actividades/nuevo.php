@@ -1,13 +1,46 @@
 <?php
-    ob_start();
-     session_start();
-    
-    if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
-        header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
+session_start();
+require '../../backend/bd/Conexion.php'; // Asegúrate de incluir tu archivo de conexión a la base de datos
 
-    $id=$_SESSION['id'];
-  }
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
+    header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
+    exit();
+}
+
+// Verifica si el formulario fue enviado
+if (isset($_POST['register_user'])) {
+    // Captura y limpia los datos del formulario
+    $username = htmlspecialchars(trim($_POST['username']));
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $password = htmlspecialchars(trim($_POST['password']));
+    $rol = htmlspecialchars(trim($_POST['rol']));
+
+    // Hashear la contraseña para seguridad
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // SQL para insertar el nuevo usuario
+    $sql = "INSERT INTO users (username, name, email, password, rol, iddoc, created_at) 
+            VALUES (:username, :name, :email, :password, :rol, 1, NOW())";
+
+    // Prepara la consulta
+    $stmt = $pdo->prepare($sql);
+
+    // Ejecuta la consulta con los valores capturados
+    if ($stmt->execute([
+        ':username' => $username,
+        ':name' => $name,
+        ':email' => $email,
+        ':password' => $hashed_password,
+        ':rol' => $rol
+    ])) {
+        echo "<script>alert('Usuario registrado exitosamente');</script>";
+    } else {
+        echo "<script>alert('Hubo un error al registrar el usuario');</script>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -74,7 +107,7 @@
             </li>
 
             <li>
-                <a href="#" class="active"><i class='bx bxs-diamond icon' ></i> Actividades financieras<i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#" class="active"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../actividades/mostrar.php">Pagos</a></li>
                     <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
@@ -148,86 +181,51 @@
             <ul class="breadcrumbs">
                 <li><a href="../admin/escritorio.php">Home</a></li>
                 <li class="divider">></li>
-                <li><a href="../actividades/mostrar.php">Listado de pago</a></li>
+                <li><a href="../actividades/mostrar.php">Listado de Usuarios</a></li>
                 <li class="divider">></li>
-                <li><a href="#" class="active">Nueva pago</a></li>
+                <li><a href="#" class="active">Nuevo Usuario</a></li>
             </ul>
            
            <!-- multistep form -->
 
 
-<form action="" enctype="multipart/form-data" method="POST"  autocomplete="off">
+           <form action="" enctype="multipart/form-data" method="POST" autocomplete="off">
   <div class="containerss">
-    <h1>Nueva pago de la cita</h1>
-   
+    <h1>Nuevo Usuario</h1>
+
     <div class="alert-danger">
-  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-  <strong>Importante!</strong> Es importante rellenar los campos con &nbsp;<span class="badge-warning">*</span><br>
- 
-</div>
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>Importante!</strong> Es importante rellenar los campos con &nbsp;<span class="badge-warning">*</span><br>
+    </div>
     <hr>
-<br>
-    <label for="email"><b>Motivo de la cita</b></label><span class="badge-warning">*</span>
-    <textarea name="appnam" style="height:200px" placeholder="Write something.."> </textarea>
-  
-    <label for="psw"><b>Nombre del paciente</b></label><span class="badge-warning">*</span>
-    <select required name="apppac" id="pati">
-        <option>Seleccione</option>
+    <br>
+
+    <label for="username"><b>Username</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="Nombre de Usuario" name="username" required>
+
+    <label for="name"><b>Nombre del Usuario</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="Nombre del Usuario" name="name" required>
+
+    <label for="email"><b>Correo</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="Correo del Usuario" name="email" required>
+
+    <label for="password"><b>Contraseña</b></label><span class="badge-warning">*</span>
+    <input type="password" placeholder="Contraseña" name="password" required>
+
+    <label for="rol"><b>Rol</b></label><span class="badge-warning">*</span>
+    <select required name="rol">
+      <option value="">Seleccione</option>
+      <option value="1">Administrador</option>
+      <option value="2">Supervisor</option>
+      <option value="3">Usuario</option>
     </select>
-
-    <label for="psw"><b>Nombre del médico</b></label><span class="badge-warning">*</span>
-    <select required name="appdoc" id="doc">
-        <option>Seleccione</option>
-    </select>
-
-    <label for="email"><b>Especialidad del médico</b></label><span class="badge-warning">*</span>
-
-     <select disabled id="spe">
-        <option>Seleccione</option>
-    </select>
-
-
-    <label for="psw"><b>Laboratorio</b></label><span class="badge-warning">*</span>
-    <select required name="applab" id="lab">
-        <option>Seleccione</option>
-    </select>
-
-    <label for="psw"><b>Color</b></label><span class="badge-warning">*</span>
-    <select required name="appco" id="gep">
-        <option style="color:#CD5C5C;" value="#CD5C5C">&#9724; Indio Rojo</option>
-        <option style="color:#F08080;" value="#F08080">&#9724; Coral claro</option>
-        <option style="color:#8B0000;" value="#8B0000">&#9724; Rojo oscuro</option>
-        <option style="color:#0071c5;" value="#0071c5">&#9724; Azul oscuro</option>
-        <option style="color:#FFC0CB;" value="#FFC0CB">&#9724; Rosado</option>
-        <option style="color:#FFB6C1;" value="#FFB6C1">&#9724; Rosa claro</option>
-        <option style="color:#FF7F50;" value="#FF7F50">&#9724; Coral</option>
-        <option style="color:#FF4500;" value="#FF4500">&#9724; Rojo naranja</option>
-        <option style="color:#FFFF00;" value="#FFFF00">&#9724; Amarillo</option>
-        <option style="color:#EE82EE;" value="#EE82EE">&#9724; Violeta</option>
-        
-          
-    </select>
-
-    <label for="email"><b>Fecha inicial</b></label><span class="badge-warning">*</span>
-    <input type="datetime-local"  name="appini"required="">
-
-    <label for="email"><b>Fecha final</b></label><span class="badge-warning">*</span>
-    <input type="datetime-local"  name="appfin"required="">
-
-     <label for="email"><b>Monto a pagar</b></label><span class="badge-warning">*</span>
-    <input type="text" placeholder="S/. 0.00" name="appmont" required="" value="0.00">
-
-     <label for="email"><b>Realiza pago</b></label><span class="badge-warning">*</span>
-     <label>SI</label>
-    <input type="checkbox" name="appreal"   value="1">
-
 
     <hr>
-   
-    <button type="submit" name="add_appointment" class="registerbtn">Guardar</button>
+
+    <button type="submit" name="register_user" class="registerbtn">Guardar</button>
   </div>
-  
 </form>
+
 
         </main>
         <!-- MAIN -->
@@ -248,5 +246,3 @@
    
 </body>
 </html>
-
-

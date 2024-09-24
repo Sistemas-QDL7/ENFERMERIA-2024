@@ -56,8 +56,8 @@ $events = $req->fetchAll();
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Consulta <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../citas/mostrar.php">Todas las Consultas</a></li>
-                    <li><a href="../citas/nuevo.php">Nueva</a></li>
+                    <li><a href="../usuarios/mostrar.php">Todas las Consultas</a></li>
+                    <li><a href="../usuario/nuevo.php">Nueva</a></li>
                     
                    
                 </ul>

@@ -89,7 +89,7 @@ $events = $req->fetchAll();
             </li>
 
             <li>
-                <a href="#"><i class='bx bxs-diamond icon' ></i> Actividades financieras<i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../actividades/mostrar.php">Pagos</a></li>
                     <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>

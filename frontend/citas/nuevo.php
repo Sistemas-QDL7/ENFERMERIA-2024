@@ -195,14 +195,13 @@
                     <textarea name="appnam" style="height:200px" placeholder="Motivo de la Consulta..."></textarea>
 
                     <label for="psw"><b>Nombre del enfermero</b></label><span class="badge-warning">*</span>
-                    <select required name="appdoc" id="doc">
-                        <option>Seleccione</option>
-                    </select>
+                    <input type="text" name="appdoc" id="doc" value="<?php echo $_SESSION['name']; ?>" readonly>
 
-                    <label for="email"><b>Especialidad del enfermero</b></label><span class="badge-warning">*</span>
+
+                    <!--<label for="email"><b>Especialidad del enfermero</b></label><span class="badge-warning">*</span>
                     <select disabled id="spe">
                         <option>Seleccione</option>
-                    </select>
+                    </select>-->
 
                     <label for="psw"><b>Servicio de atención</b></label><span class="badge-warning">*</span>
                     <select required name="applab" id="lab">

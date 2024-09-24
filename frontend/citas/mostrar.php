@@ -2,7 +2,7 @@
     ob_start();
      session_start();
     
-     if(!isset($_SESSION['rol']) || ($_SESSION['rol'] != 1 && $_SESSION['rol'] != 2)){
+     if(!isset($_SESSION['rol']) || ($_SESSION['rol'] != 1)){
         header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
 
     $id=$_SESSION['id'];

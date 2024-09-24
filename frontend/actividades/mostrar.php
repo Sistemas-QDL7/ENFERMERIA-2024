@@ -25,7 +25,7 @@
 
 
 
-    <title>Enfermería QDL | Historial de los pagos de paciente</title>
+    <title>Enfermería QDL | Lista de Usuarios</title>
 </head>
 <body>
     
@@ -77,10 +77,10 @@
             </li>
 
             <li>
-                <a href="#"  class="active"><i class='bx bxs-diamond icon' ></i> Actividades financieras<i class='bx bx-chevron-right icon-right' ></i></a>
+            <a href="#"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../actividades/mostrar.php">Pagos</a></li>
-                    <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
+                    <li><a href="../actividades/mostrar.php">Lista de Usuarios</a></li>
+                    <li><a href="../actividades/nuevo.php">Nuevo usuario</a></li>
                    
                 </ul>
             </li>
@@ -149,19 +149,19 @@
             <ul class="breadcrumbs">
                 <li><a href="../admin/escritorio.php">Home</a></li>
                 <li class="divider">></li>
-                <li><a href="#" class="active">Historial de los pagos de paciente</a></li>
+                <li><a href="#" class="active">Lista de Usuarios</a></li>
             </ul>
           
           <div class="data">
                 <div class="content-data">
                     <div class="head">
-                        <h3>Pacientes</h3>
+                        <h3>Usuarios</h3>
                        
                     </div>
                    <div class="table-responsive" style="overflow-x:auto;">
                        <?php 
 require '../../backend/bd/Conexion.php';
-$sentencia = $connect->prepare("SELECT * FROM patients ORDER BY idpa DESC;");
+$sentencia = $connect->prepare("SELECT * FROM users ORDER BY id DESC;");
  $sentencia->execute();
 $data =  array();
 if($sentencia){
@@ -174,41 +174,32 @@ if($sentencia){
          <table id="example" class="responsive-table">
             <thead>
                 <tr>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Paciente</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">USUARIO</th>
                     
-                    <th scope="col">Sexo</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Acciones</th>
+                    <th scope="col">NOMBRE</th>
+                    <th scope="col">CORREO</th>
+                    <th scope="col">CONTRASEÑA</th>
+                    <th scope="col">ROL</th>
+                    <th scope="col">IDDOC</th>
+                    <th scope="col">FECHA DE CREACIÓN</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($data as $d):?>
                     <tr>
-                        <th scope="row"><?php echo $d->numhs ?></th>
-                        <td data-title="Paciente"><?php echo $d->nompa ?>&nbsp;<?php echo $d->apepa ?></td>
+                        <th scope="row"><?php echo $d->id ?></th>
+                        <td data-title="Usuario"><?php echo $d->username ?></td>
                         
-                        <td data-title="Sexo"><?php echo $d->sex ?></td>
-                        <td data-title="Grupo"><?php echo $d->grup ?></td>
-                        <td data-title="Teléfono"><a href="tel:<?php echo $d->phon ?>"><?php echo $d->phon ?></a></td>
+                        <td data-title="Nombre"><?php echo $d->name ?></td>
+                        <td data-title="Correo"><?php echo $d->email ?></td>
+                        <td data-title="Contraseña"><?php echo $d->password ?></td>
                         
-                        
-                        <td data-title="Estado">
-    
-                        <label class="switch">
-                          <input type="checkbox" id="<?=$d->idpa?>" value="<?=$d->state ?>" <?=$d->state == '1' ? 'checked' : '' ;?>/> 
+                        <td data-title="Rol"><?php echo $d->rol ?></td>
+                        <td data-title="IdDoc"><?php echo  $d->iddoc ?></td>
 
-                          <span class="slider"></span>
-                        </label>
-                        </td>
-                        <td>
-                           
-                            <a title="Pagos" href="../actividades/pagos.php?id=<?php echo $d->idpa ?>" class="fa fa-money"></a>
-                            
-        
-                        </td>
+                        <td data-title="Fecha de creación"><?php  echo $d->created_at ?></td>
+
                     </tr>
                     <?php endforeach; ?>
             </tbody>
@@ -246,7 +237,7 @@ $(document).ready(function() {
     $('#example').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
+            'copy', 'csv', 'excel', 'pdf'
         ]
     } );
 } );
