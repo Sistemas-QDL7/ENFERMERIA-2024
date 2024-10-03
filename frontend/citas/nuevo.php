@@ -2,6 +2,9 @@
     ob_start();
     session_start();
     
+
+
+    
     if(!isset($_SESSION['rol']) || ($_SESSION['rol'] != 1 && $_SESSION['rol'] != 2)){
         header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
     }
@@ -46,9 +49,9 @@
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="escritorio.php" class="brand">Enfermería QDL</a>
+        <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
-            <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
+            <li><a href="../admin/escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Consulta <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -194,8 +197,14 @@
                     <label for="email"><b>Motivo de la Consulta</b></label><span class="badge-warning">*</span>
                     <textarea name="appnam" style="height:200px" placeholder="Motivo de la Consulta..."></textarea>
 
-                    <label for="psw"><b>Nombre del enfermero</b></label><span class="badge-warning">*</span>
-                    <input type="text" name="appdoc" id="doc" value="<?php echo $_SESSION['name']; ?>" readonly>
+                    
+
+                    <label for="psw"><b>Nombre del enfermero(a)</b></label><span class="badge-warning">*</span>
+                    <input type="text" name="nombredoc" id="doc" value="<?php echo $_SESSION['name']; ?>" readonly>
+
+                    <!-- Campo oculto para enviar el idodc -->
+                    <input type="hidden" name="appdoc" value="<?php echo $_SESSION['idodc']; ?>">
+
 
 
                     <!--<label for="email"><b>Especialidad del enfermero</b></label><span class="badge-warning">*</span>
@@ -208,7 +217,7 @@
                         <option>Seleccione</option>
                     </select>
 
-                    <label for="psw"><b>Color</b></label><span class="badge-warning">*</span>
+                    <!--<label for="psw"><b>Color</b></label><span class="badge-warning">*</span>
                     <select required name="appco" id="gep">
                         <option style="color:#CD5C5C;" value="#CD5C5C">&#9724; Indio Rojo</option>
                         <option style="color:#F08080;" value="#F08080">&#9724; Coral claro</option>
@@ -220,7 +229,7 @@
                         <option style="color:#FF4500;" value="#FF4500">&#9724; Rojo naranja</option>
                         <option style="color:#FFFF00;" value="#FFFF00">&#9724; Amarillo</option>
                         <option style="color:#EE82EE;" value="#EE82EE">&#9724; Violeta</option>
-                    </select>
+                    </select>-->
 
                     <label for="email"><b>Fecha final</b></label><span class="badge-warning">*</span>
                     <input type="datetime-local" name="appfin" required="">

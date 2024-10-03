@@ -34,7 +34,7 @@
     <section id="sidebar">
         <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
-            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -58,10 +58,10 @@
             </li>
 
             <li>
-                <a href="#" class="active"><i class='bx bxs-briefcase icon' ></i> Médicos <i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-briefcase icon' ></i> Personal <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../medicos/mostrar.php">Lista de médicos</a></li>
-                    <li><a href="../medicos/historial.php">Historial de los médicos</a></li>
+                    <li><a href="../medicos/mostrar.php">Lista de Personal</a></li>
+                    <li><a href="../medicos/historial.php">Historial de los Personal</a></li>
                    
                 </ul>
             </li>
@@ -79,8 +79,8 @@
             <li>
                 <a href="#"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../actividades/mostrar.php">Pagos</a></li>
-                    <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
+                    <li><a href="../actividades/mostrar.php">Lista de Usuarios</a></li>
+                    <li><a href="../actividades/nuevo.php">Nuevo Usuario</a></li>
                    
                 </ul>
             </li>

@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../../backend/css/admin.css">
+    <link rel="stylesheet"  href="../../backend/css/admin.css">
     <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/ico.svg">
 
     <!-- Data Tables -->
@@ -33,7 +33,7 @@
     <section id="sidebar">
         <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
-            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -151,7 +151,7 @@
                 <li class="divider">></li>
                 <li><a href="#" class="active">Lista de Usuarios</a></li>
             </ul>
-          
+            <button class="button" onclick="location.href='nuevo.php'">Nuevo</button>
           <div class="data">
                 <div class="content-data">
                     <div class="head">
@@ -176,13 +176,13 @@ if($sentencia){
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">USUARIO</th>
-                    
                     <th scope="col">NOMBRE</th>
                     <th scope="col">CORREO</th>
                     <th scope="col">CONTRASEÑA</th>
                     <th scope="col">ROL</th>
-                    <th scope="col">IDDOC</th>
+                    
                     <th scope="col">FECHA DE CREACIÓN</th>
+                    <th scope="col">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
@@ -195,11 +195,47 @@ if($sentencia){
                         <td data-title="Correo"><?php echo $d->email ?></td>
                         <td data-title="Contraseña"><?php echo $d->password ?></td>
                         
-                        <td data-title="Rol"><?php echo $d->rol ?></td>
-                        <td data-title="IdDoc"><?php echo  $d->iddoc ?></td>
+                        <td data-title="Rol"><?php 
+                        if($d->rol == 1)
+                        {
+                         echo 'Administrador';
+                        }
+                        else if($d->rol == 2)
+                        {
+                         echo 'Supervisor';
+                        }
+                        else if($d->rol == 3)
+                        {
+                         echo 'Usuario';
+                        }
+                        ;  
+                        ?></td>
+                        
 
                         <td data-title="Fecha de creación"><?php  echo $d->created_at ?></td>
+                        <td>
+                            <a title="Actualizar" href="../actividades/editar.php?id=<?php echo $d->id ?>" class="fa fa-pencil tooltip"></a>
+                            <a title="Información" href="../actividades/info.php?id=<?php echo $d->id ?>" class="fa fa-info"></a>
+                            
+                            
+                            
+                            <form  onsubmit="return confirm('Realmente desea eliminar el registro?');" method='POST' action='<?php $_SERVER['PHP_SELF'] ?>'>
+<input type='hidden' name='id' value="<?php echo  $d->id; ?>">
 
+<button name='delete_patients' style="cursor: pointer;" class="fa fa-trash"></button>
+</form>
+
+                            <?php 
+                                if ($d->rol == '1') {
+                                    // code...
+               // echo '<a title="Cambiar contraseña"  href="../pacientes/password.php?id='.$d->id.'" class="fa fa-key"></a>';
+                                }else {
+                                    //echo '<a title="Crear perfil" href="../pacientes/crear.php?id='.$d->id.'" class="fa fa-user-plus"></a>';
+                                }
+
+                             ?>
+        
+                        </td>
                     </tr>
                     <?php endforeach; ?>
             </tbody>
@@ -218,7 +254,7 @@ if($sentencia){
         </main>
         <!-- MAIN -->
     </section>
-    <?php include_once '../../backend/php/delete_patients.php' ?>
+    <?php include_once '../../backend/php/delete_users.php' ?>
     <!-- NAVBAR -->
     <script src="../../backend/js/jquery.min.js"></script>
     

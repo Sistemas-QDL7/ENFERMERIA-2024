@@ -6,7 +6,7 @@ if (isset($_POST['add_appointment'])) {
     $numhs = trim($_POST['apppac']); // El valor de numhs (número de historia clínica)
     $idodc = trim($_POST['appdoc']);
     $idlab = trim($_POST['applab']);
-    $color = trim($_POST['appco']);
+    //$color = trim($_POST['appco']);
     $start = $_POST['appini'];
     $end = $_POST['appfin'];
     $monto = $_POST['appmont'];

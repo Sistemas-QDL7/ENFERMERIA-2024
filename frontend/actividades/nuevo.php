@@ -1,6 +1,7 @@
 <?php
 session_start();
-require '../../backend/bd/Conexion.php'; // Asegúrate de incluir tu archivo de conexión a la base de datos
+require 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php'; // Asegúrate de incluir tu archivo de conexión a la base de datos
+include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
 
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
     header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
@@ -8,20 +9,25 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] != 1) {
 }
 
 // Verifica si el formulario fue enviado
-if (isset($_POST['register_user'])) {
+if (isset($_POST['add_user'])) {
     // Captura y limpia los datos del formulario
     $username = htmlspecialchars(trim($_POST['username']));
     $name = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
     $rol = htmlspecialchars(trim($_POST['rol']));
+    $idodc =  htmlspecialchars(trim($_POST['idodc']));
 
-    // Hashear la contraseña para seguridad
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    
+
+    // Hashear la contraseña para seguridad con MD5
+    $hashed_password = md5($password);
 
     // SQL para insertar el nuevo usuario
-    $sql = "INSERT INTO users (username, name, email, password, rol, iddoc, created_at) 
-            VALUES (:username, :name, :email, :password, :rol, 1, NOW())";
+    $sql = "INSERT INTO users (username, name, email, password, rol, idodc, created_at) 
+            VALUES (:username, :name, :email, :password, :rol, :idodc, NOW())";
+    $pdo = $connect;
 
     // Prepara la consulta
     $stmt = $pdo->prepare($sql);
@@ -32,7 +38,8 @@ if (isset($_POST['register_user'])) {
         ':name' => $name,
         ':email' => $email,
         ':password' => $hashed_password,
-        ':rol' => $rol
+        ':rol' => $rol,
+        ':idodc' => $idodc
     ])) {
         echo "<script>alert('Usuario registrado exitosamente');</script>";
     } else {
@@ -40,7 +47,7 @@ if (isset($_POST['register_user'])) {
     }
 }
 ?>
-
+<script></script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -53,7 +60,7 @@ if (isset($_POST['register_user'])) {
 
 
 
-    <title>Enfermería QDL | Nueva pago</title>
+    <title>Enfermería QDL | Nuevo Usuario</title>
 </head>
 <body>
 
@@ -62,7 +69,7 @@ if (isset($_POST['register_user'])) {
 
         <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
-            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -109,8 +116,8 @@ if (isset($_POST['register_user'])) {
             <li>
                 <a href="#" class="active"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../actividades/mostrar.php">Pagos</a></li>
-                    <li><a href="../actividades/nuevo.php">Nuevo pago</a></li>
+                    <li><a href="../actividades/mostrar.php">Lista de Usuarios</a></li>
+                    <li><a href="../actividades/nuevo.php">Nuevo Usuario</a></li>
                    
                 </ul>
             </li>
@@ -215,18 +222,24 @@ if (isset($_POST['register_user'])) {
     <label for="rol"><b>Rol</b></label><span class="badge-warning">*</span>
     <select required name="rol">
       <option value="">Seleccione</option>
-      <option value="1">Administrador</option>
-      <option value="2">Supervisor</option>
-      <option value="3">Usuario</option>
+      <option style="color:crimson" value="1">Administrador</option>
+      <option style="color:blue" value="2">Supervisor</option>
+      <option style="color:gray" value="3">Usuario</option>
+    </select>
+
+    <label for="psw"><b>Usuario de Enfermería a cargar</b></label><span class="badge-warning">*</span>
+    <select required name="idodc" id="doc">
+    <option value="12">Seleccione</option>
+    <?php foreach ($doctores as $doctor): ?>
+        <option value="<?php echo $doctor['idodc']; ?>"><?php echo $doctor['nodoc']; ?></option>
+    <?php endforeach; ?>
     </select>
 
     <hr>
 
-    <button type="submit" name="register_user" class="registerbtn">Guardar</button>
+    <button type="submit" name="add_user" class="registerbtn">Guardar</button>
   </div>
 </form>
-
-
         </main>
         <!-- MAIN -->
     </section>

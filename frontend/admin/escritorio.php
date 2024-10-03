@@ -51,7 +51,7 @@ $events = $req->fetchAll();
     <section id="sidebar">
         <a href="escritorio.php" class="brand">ENFERMERÍA QDL</a>
         <ul class="side-menu">
-            <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
+            <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -166,7 +166,7 @@ $events = $req->fetchAll();
             <ul class="breadcrumbs">
                 <li><a href="escritorio.php">Home</a></li>
                 <li class="divider">/</li>
-                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#" class="active">Resumen</a></li>
             </ul>
             <div class="info-data">
                 <div class="card">

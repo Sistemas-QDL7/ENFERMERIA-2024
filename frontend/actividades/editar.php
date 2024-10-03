@@ -1,12 +1,70 @@
 <?php
     ob_start();
      session_start();
+     require 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php'; // Asegúrate de incluir tu archivo de conexión a la base de datos
+include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
+
     
     if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 1){
         header('Location: ../usuarios/error.php?error=No tienes permisos para acceder a esta página');
 
     $id=$_SESSION['id'];
   }
+
+  if (isset($_POST['upd_users'])) {
+    // Captura y limpia los datos del formulario
+    $username = htmlspecialchars(trim($_POST['username']));
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = htmlspecialchars(trim($_POST['email']));
+    $password = htmlspecialchars(trim($_POST['password']));
+    $rol = htmlspecialchars(trim($_POST['rol']));
+    
+
+    
+
+    // Hashear la contraseña para seguridad con MD5
+    $hashed_password = md5($password);
+
+    // SQL para actualizar el nuevo usuario
+    $sql = "UPDATE users 
+        SET username = :username, 
+            name = :name, 
+            email = :email, 
+            password = :password, 
+            rol = :rol 
+        WHERE id = :id";
+
+    $pdo = $connect;
+
+    // Prepara la consulta
+    $stmt = $pdo->prepare($sql);
+
+    // Ejecuta la consulta con los valores capturados
+    if ($stmt->execute([
+        ':username' => $username,
+        ':name' => $name,
+        ':email' => $email,
+        ':password' => $hashed_password,
+        ':rol' => $rol
+        
+    ])) {
+        echo '<div id="cookiePopup" class="hide">
+      <img src="../../backend/img/404-tick.png" />
+      <p>
+        Usuario actualizado correctamente!
+      </p>
+      <button id="acceptCookie" type="button">OK</button>
+    </div>';
+    } else {
+        echo '<div id="cookiePopup" class="hide">
+      <img src="../../backend/img/error.png" />
+      <p>
+        Hubo un error al actualizar el usuario
+      </p>
+      <button id="acceptCookie" type="button">OK</button>
+    </div>';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -16,24 +74,20 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../../backend/css/admin.css">
     <link rel="icon" type="image/png" sizes="96x96" href="../../backend/img/ico.svg">
-
-    <!-- Data Tables -->
-    <link rel="stylesheet" type="text/css" href="../../backend/css/datatable.css">
-    <link rel="stylesheet" type="text/css" href="../../backend/css/buttonsdataTables.css">
-    <link rel="stylesheet" type="text/css" href="../../backend/css/font.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
 
 
 
-
-    <title>Enfermería QDL | Documentos de los pacientes</title>
+    <title>Enfermería QDL | Actualizar usuarios</title>
 </head>
 <body>
-    
+
     <!-- SIDEBAR -->
     <section id="sidebar">
+
         <a href="../admin/escritorio.php" class="brand">Enfermería QDL</a>
         <ul class="side-menu">
-            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
+            <li><a href="../admin/escritorio.php" ><i class='bx bxs-dashboard icon' ></i>Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
                 <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
@@ -65,6 +119,8 @@
                 </ul>
             </li>
 
+
+           
 
             <li>
                 <a href="#"><i class='bx bxs-user-pin icon' ></i> Recursos humanos<i class='bx bx-chevron-right icon-right' ></i></a>
@@ -105,7 +161,7 @@
                 </ul>
             </li>
 
-           <li><a href="../acerca/mostrar.php"><i class='bx bxs-info-circle icon' ></i> Acerca de</a></li>
+            <li><a href="../acerca/mostrar.php"><i class='bx bxs-info-circle icon' ></i> Acerca de</a></li>
           
            
         </ul>
@@ -116,6 +172,7 @@
 
     <!-- NAVBAR -->
     <section id="content">
+
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu toggle-sidebar' ></i>
@@ -131,7 +188,7 @@
             <div class="profile">
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAUqRSSeB-qxBHux7Hn4hsf94d1-nBkT6XmQ&s/neu.png" alt="">
                 <ul class="profile-link">
-                   <li><a href="../profile/mostrar.php"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
+                    <li><a href="../profile/mostrar.php"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
                     
                     <li>
                      <a href="../salir.php"><i class='bx bxs-log-out-circle' ></i> Logout</a>
@@ -143,114 +200,105 @@
         <!-- NAVBAR -->
 
         <!-- MAIN -->
+
         <main>
             <h1 class="title">Bienvenido <?php echo '<strong>'.$_SESSION['name'].'</strong>'; ?></h1>
             <ul class="breadcrumbs">
                 <li><a href="../admin/escritorio.php">Home</a></li>
                 <li class="divider">></li>
-                <li><a href="#" class="active">Documentos de los pacientes</a></li>
+                <li><a href="../pacientes/mostrar.php">Listado de los pacientes</a></li>
+                <li class="divider">></li>
+                <li><a href="#" class="active">Actualizar paciente</a></li>
             </ul>
-            
-          <div class="data">
-                <div class="content-data">
-                    <div class="head">
-                        <h3>Pacientes</h3>
-
-                    </div>
-                   <div class="table-responsive" style="overflow-x:auto;">
-                       <?php 
+           
+           <!-- multistep form -->
+<?php 
 require '../../backend/bd/Conexion.php';
-$sentencia = $connect->prepare("SELECT * FROM patients ORDER BY idpa DESC;");
+ $id = $_GET['id'];
+ $sentencia = $connect->prepare("SELECT * FROM users  WHERE id= '$id';");
  $sentencia->execute();
+
 $data =  array();
 if($sentencia){
   while($r = $sentencia->fetchObject()){
     $data[] = $r;
   }
 }
-     ?>
-     <?php if(count($data)>0):?>
-         <table id="example" class="responsive-table">
-            <thead>
-                <tr>
-                    <th scope="col">DNI</th>
-                    <th scope="col">Paciente</th>
-                    
-                    <th scope="col">Sexo</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($data as $d):?>
-                    <tr>
-                        <th scope="row"><?php echo $d->numhs ?></th>
-                        <td data-title="Paciente"><?php echo $d->nompa ?>&nbsp;<?php echo $d->apepa ?></td>
-                        
-                        <td data-title="Sexo"><?php echo $d->sex ?></td>
-                        <td data-title="Grupo"><?php echo $d->grup ?></td>
-                        <td data-title="Teléfono"><?php echo $d->phon ?></td>
-                        
-                        <td data-title="Estado">
-    
-                        <label class="switch">
-                          <input type="checkbox" id="<?=$d->idpa?>" value="<?=$d->state ?>" <?=$d->state == '1' ? 'checked' : '' ;?>/> 
+   ?>
+   <?php if(count($data)>0):?>
+        <?php foreach($data as $d):?>
 
-                          <span class="slider"></span>
-                        </label>
-                        </td>
-                        <td>
-                           
-                            <a title="Documentos" href="../pacientes/documentos_nuevo.php?id=<?php echo $d->idpa ?>" class="fa fa-file-text-o"></a>
-                            
-        
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-            </tbody>
-         </table> 
-         <?php else:?>
+<form action="" enctype="multipart/form-data" method="POST"  autocomplete="off" onsubmit="return validacion()">
+  <div class="containerss">
+    <h1>Actualizar Usuarios</h1>
+    <?php include_once '../../backend/php/upd_users.php' ?>
+  <br>
+    <hr>
+
+    <label for="email"><b>Username</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="ejm: ASCS855CS74" value="<?php echo $d->username; ?>" name="username" maxlength="8" required>
+    <input type="hidden" name="id" value="<?php echo $d->id; ?>">
+
+    <label for="psw"><b>Nombre del Usuario</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="ejm: Juan Raul" name="name" value="<?php echo $d->name; ?>" required>
+
+    <label for="psw"><b>Correo</b></label><span class="badge-warning">*</span>
+    <input type="text" placeholder="ejm: Ramirez Requena" value="<?php echo $d->email; ?>" name="email" required>
+
+
+    <label for="rol"><b>Rol</b></label><span class="badge-warning">*</span>
+    <select required name="rol">
+      <option value=""><?php
+       if($d->rol == 1)
+       {
+        echo 'Administrador';
+       }
+       else if($d->rol == 2)
+       {
+        echo 'Supervisor';
+       }
+       else if($d->rol == 3)
+       {
+        echo 'Usuario';
+       }
+       ; 
+       ?></option>
+      <option style="color:crimson" value="1">Administrador</option>
+      <option style="color:blue" value="2">Supervisor</option>
+      <option style="color:gray" value="3">Usuario</option>
+    </select>
+
+
+    <label for="psw"><b>Contraseña</b></label><span class="badge-warning">*</span>
+    <input type="password" placeholder="***" value="" name="password" required>
+
+
+    <hr>
+   
+    <button type="submit" name="upd_users" class="registerbtn">Guardar</button>
+  </div>
   
-    <div class="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-      <strong>Danger!</strong> No hay datos.
-    </div>
+</form>
+        <?php endforeach; ?>
+  
+    <?php else:?>
+      <p class="alert alert-warning">No hay datos</p>
     <?php endif; ?>
-                    </div>
-                </div>
-            </div>  
 
         </main>
         <!-- MAIN -->
     </section>
-    <?php include_once '../../backend/php/delete_patients.php' ?>
-    <!-- NAVBAR -->
     <script src="../../backend/js/jquery.min.js"></script>
+
+
+    <!-- NAVBAR -->
     
     <script src="../../backend/js/script.js"></script>
+    <script src="../../backend/js/multistep.js"></script>
     
-    <!-- Data Tables -->
-    <script type="text/javascript" src="../../backend/js/datatable.js"></script>
-    <script type="text/javascript" src="../../backend/js/datatablebuttons.js"></script>
-    <script type="text/javascript" src="../../backend/js/jszip.js"></script>
-    <script type="text/javascript" src="../../backend/js/pdfmake.js"></script>
-    <script type="text/javascript" src="../../backend/js/vfs_fonts.js"></script>
-    <script type="text/javascript" src="../../backend/js/buttonshtml5.js"></script>
-    <script type="text/javascript" src="../../backend/js/buttonsprint.js"></script>
-    <script type="text/javascript">
-$(document).ready(function() {
-    $('#example').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
-} );
-    </script>
+    
 
- <script type="text/javascript">
+    <script type="text/javascript">
     let popUp = document.getElementById("cookiePopup");
 //When user clicks the accept button
 document.getElementById("acceptCookie").addEventListener("click", () => {
@@ -286,8 +334,6 @@ window.onload = () => {
   }, 2000);
 };
     </script>
-
+   
 </body>
 </html>
-
-

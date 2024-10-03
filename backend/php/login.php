@@ -16,12 +16,12 @@
         if($errMsg == '') {
             try {
                 // Consulta SQL para verificar el usuario
-                $stmt = $connect->prepare('SELECT id, username, name, email, password, rol FROM users WHERE username = :username');
+                $stmt = $connect->prepare('SELECT id, username, name, email, password, rol , idodc FROM users WHERE username = :username');
                 $stmt->execute(array(':username' => $username));
                 $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if($data == false) {
-                    $errMsg = "El usuario: $username no se encuentra, puede solicitarlo con el administrador.";
+                    $errMsg = "El usuario: $username no se encuentra, puede solicitarlo con SISTEMAS TI.";
                 } else {
                     if($password == $data['password']) {
                         // Asignación de variables de sesión
@@ -31,6 +31,7 @@
                         $_SESSION['name'] = $data['name'];
                         $_SESSION['email'] = $data['email'];
                         $_SESSION['rol'] = $data['rol'];
+                        $_SESSION['idodc'] = $data['idodc'];
 
                         // Redirección según el rol
                         if($_SESSION['rol'] == 1) {
