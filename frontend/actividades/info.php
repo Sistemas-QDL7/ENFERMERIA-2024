@@ -42,7 +42,7 @@
             </li>
 
             <li>
-                <a href="#" class="active"><i class='bx bxs-user icon' ></i> Pacientes <i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-user icon' ></i> Pacientes <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../pacientes/mostrar.php" >Lista de pacientes</a></li>
                     <li><a href="../pacientes/pagos.php">Pagos</a></li>
@@ -73,7 +73,7 @@
             </li>
 
             <li>
-                <a href="#"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#" class="active"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../actividades/mostrar.php">Lista de Usuarios</a></li>
                     <li><a href="../actividades/nuevo.php">Nuevo Usuario</a></li>
@@ -147,7 +147,7 @@
             <ul class="breadcrumbs">
                 <li><a href="../admin/escritorio.php">Home</a></li>
                 <li class="divider">></li>
-                <li><a href="../pacientes/mostrar.php">Listado de los usuarios</a></li>
+                <li><a href="../actividades/mostrar.php">Listado de los usuarios</a></li>
                 <li class="divider">></li>
                 <li><a href="#" class="active">Información del usuario</a></li>
             </ul>
@@ -210,7 +210,7 @@ if($sentencia){
        
     </select>
 
-    <label for="psw"><b>Fecha de creación del Usuario</b></label><span class="badge-warning">*</span>
+    <label for="psw"><b>Fecha de modificación del Usuario</b></label><span class="badge-warning">*</span>
     <input type="TIMESTAMP" disabled  value="<?php echo $d->created_at; ?>" name="cump" required>
 
     

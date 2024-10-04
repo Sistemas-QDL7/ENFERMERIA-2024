@@ -181,7 +181,7 @@ if($sentencia){
                     <th scope="col">CONTRASEÑA</th>
                     <th scope="col">ROL</th>
                     
-                    <th scope="col">FECHA DE CREACIÓN</th>
+                    <th scope="col">FECHA DE MODIFICACIÓN</th>
                     <th scope="col">ACCIONES</th>
                 </tr>
             </thead>

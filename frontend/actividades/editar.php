@@ -18,6 +18,7 @@ include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
     $email = htmlspecialchars(trim($_POST['email']));
     $password = htmlspecialchars(trim($_POST['password']));
     $rol = htmlspecialchars(trim($_POST['rol']));
+    $id = htmlspecialchars(trim($_POST['id']));
     
 
     
@@ -45,7 +46,8 @@ include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
         ':name' => $name,
         ':email' => $email,
         ':password' => $hashed_password,
-        ':rol' => $rol
+        ':rol' => $rol,
+        ':id' => $id
         
     ])) {
         echo '<div id="cookiePopup" class="hide">
@@ -100,7 +102,7 @@ include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
             </li>
 
             <li>
-                <a href="#" class="active"><i class='bx bxs-user icon' ></i> Pacientes <i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-user icon' ></i> Pacientes <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../pacientes/mostrar.php" >Lista de pacientes</a></li>
                     <li><a href="../pacientes/pagos.php">Pagos</a></li>
@@ -132,7 +134,7 @@ include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
             </li>
 
             <li>
-                <a href="#"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#" class="active"><i class='bx bxs-diamond icon' ></i> Usuarios<i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
                     <li><a href="../actividades/mostrar.php">Lista de Usuarios</a></li>
                     <li><a href="../actividades/nuevo.php">Nuevo Usuario</a></li>
@@ -206,9 +208,9 @@ include_once 'C:/wamp64/www/enfermeria/backend/bd/Conexion.php';
             <ul class="breadcrumbs">
                 <li><a href="../admin/escritorio.php">Home</a></li>
                 <li class="divider">></li>
-                <li><a href="../pacientes/mostrar.php">Listado de los pacientes</a></li>
+                <li><a href="../actividades/mostrar.php">Listado de los usuarios</a></li>
                 <li class="divider">></li>
-                <li><a href="#" class="active">Actualizar paciente</a></li>
+                <li><a href="#" class="active">Actualizar usuario</a></li>
             </ul>
            
            <!-- multistep form -->
