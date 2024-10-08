@@ -78,7 +78,8 @@ $pdf->Ln(4); // Espacio mayor entre la línea y el texto final
 
 $pdf->setX(15);
 $pdf->Cell(50, $ancho + 4, mb_convert_encoding('RESPONSABLE EN TURNO', 'ISO-8859-1', 'UTF-8'), 0, 1, 'C');
-
+//Construir el nombre del archivo
+//$fileName = 'ticket_' . $row['nompa'] . ' ' . $row['apepa'] . '_' . $row['numhs'] . '.pdf';
 // Generar el PDF
-$pdf->Output('ticket.pdf', 'D');
+$pdf->Output("ticket.pdf", 'D');
 ?>

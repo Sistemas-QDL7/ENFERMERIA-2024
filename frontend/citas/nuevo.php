@@ -228,20 +228,26 @@
                     <label for="email"><b>Fecha final</b></label><span class="badge-warning">*</span>
                     <input type="datetime-local" name="appfin" required="">
 
-
-                    <label for="psw"><b>Medicamento</b></label><span class="badge-warning">*</span>
-                    <input type="text" id="searchBox1" name="appmont" placeholder="Buscar por clave del Medicamento" autocomplete="off">
-                    <div id="results1" class="autocomplete-results"></div>
-                    
+                    <div id="medicamentosContainer">
+                        <div class="medicamentoItem">
+                            <label for="psw"><b>Medicamento</b></label><span class="badge-warning">*</span>
+                            <input type="text" id="searchBox1" name="appmont" class="medicamentoInput" placeholder="Buscar por clave del Medicamento" autocomplete="off">
+                            <!--<div id="results1" class="autocomplete-results"></div>-->
+                            <div class="resultsDiv"></div>
+                            <label for="psw"><b>Cantidad</b></label><span class="badge-warning">*</span>
+                            <input type="number" id="cantidad" name="cantidad" min="1" value="1">
+                            <div id="stockDisponible">Stock disponible: 0</div>
+                        </div>
+                    </div>
 
                     <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const searchBox = document.getElementById('searchBox1');
-                                const resultsDiv = document.getElementById('results1');
-                                const cantidadInput = document.getElementById('cantidad'); // Input para la cantidad
+                            const searchBoxes = document.querySelectorAll('.medicamentoInput');
 
+                            searchBoxes.forEach((searchBox) => {
+                                const resultsDiv = searchBox.nextElementSibling; // Selects the next div after the searchBox
                                 searchBox.addEventListener('input', function() {
-                                    const searchTerm = searchBox.value;
+                                    const searchTerm = this.value;
 
                                     if (searchTerm.length >= 2) {
                                         fetch(`search1.php?term=${encodeURIComponent(searchTerm)}`)
@@ -250,97 +256,131 @@
                                                 resultsDiv.innerHTML = '';
 
                                                 data.forEach(item => {
-                                                    const resultItem1 = document.createElement('div');
-                                                    resultItem1.classList.add('autocomplete-item');
-                                                    resultItem1.textContent = `${item.nompro}`;
-                                                    resultItem1.dataset.codpro = item.codpro;
-                                                    resultItem1.dataset.stock = item.stock; // Almacena el stock
+                                                    const resultItem = document.createElement('div');
+                                                    resultItem.classList.add('autocomplete-item');
+                                                    resultItem.textContent = item.nompro;
+                                                    resultItem.dataset.codpro = item.codpro;
 
-                                                    resultItem1.addEventListener('click', function() {
+                                                    resultItem.addEventListener('click', function() {
                                                         searchBox.value = item.nompro;
                                                         resultsDiv.innerHTML = '';
-                                                        
-                                                        // Establecer la cantidad en 1 al seleccionar un medicamento
-                                                        cantidadInput.value = 1; 
-                                                        
-                                                        // Actualizar el stock disponible
-                                                        actualizarStockDisponible(item.stock);
+                                                        obtenerStock(item.codpro, searchBox); // Llama a obtenerStock al seleccionar un medicamento
                                                     });
 
-                                                    resultsDiv.appendChild(resultItem1);
+                                                    resultsDiv.appendChild(resultItem);
                                                 });
                                             });
                                     } else {
                                         resultsDiv.innerHTML = '';
                                     }
                                 });
+                            });
 
-                                // Función para actualizar el stock disponible
-                                function actualizarStockDisponible(stock) {
-                                    const stockDiv = document.getElementById('stockDisponible');
-                                    if (stockDiv) { // Verificar si el elemento existe
-                                        stockDiv.textContent = `Stock disponible: ${stock}`;
-                                    } else {
-                                        console.error("El elemento 'stockDisponible' no se encontró en el DOM.");
-                                    }
-                                }
-
-                                // Agregar un listener al input de cantidad
-                                cantidadInput.addEventListener('input', function() {
-                                    const cantidad = parseInt(cantidadInput.value) || 0;
-                                    const selectedItem = document.querySelector('.autocomplete-item.selected');
-                                    
-                                    if (selectedItem) {
-                                        const stock = parseInt(selectedItem.dataset.stock);
-                                        
-                                        // Comprobar si la cantidad ingresada es válida respecto al stock
-                                        if (cantidad > stock) {
-                                            alert("Cantidad no disponible en stock.");
-                                            cantidadInput.value = stock; // Restablecer a la cantidad máxima disponible
-                                        }
-                                    }
-                                });
-
-                                // Función para descontar stock
-                                function descontarStock(codpro, cantidad) {
-                                    fetch("actualizar_stock.php", {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify({ medicamento: codpro, cantidad: cantidad }),
-                                    })
+                            // Función para obtener el stock disponible
+                            function obtenerStock(codpro, searchBox) {
+                                fetch(`obtener_stock.php?codpro=${codpro}`)
                                     .then(response => response.json())
                                     .then(data => {
-                                        if (data.success) {
-                                            console.log(data.message);
+                                        const medicamentoItem = searchBox.closest('.medicamentoItem'); //Encuentra el contenedor del medicamento
+                                        const stockDiv = medicamentoItem.querySelector('.stockDisponible');
+                                        if (stockDiv) {
+                                            stockDiv.textContent = `Stock disponible: ${data.stock}`;
                                         } else {
-                                            console.error(data.message);
+                                            console.error('Elemento stockDisponible no encontrado.');
                                         }
-                                    })
-                                    .catch(error => console.error("Error:", error));
-                                }
+                                })
+                                .catch(error => console.error('Error al obtener stock:', error));
+                            }
 
-                                // Llama a descontar stock cuando cambie la cantidad
-                                cantidadInput.addEventListener('change', function() {
-                                    const cantidad = parseInt(cantidadInput.value) || 0;
-                                    const selectedItem = document.querySelector('.autocomplete-item.selected');
-                                    
-                                    if (selectedItem && cantidad > 0) {
-                                        const codpro = selectedItem.dataset.codpro;
-                                        descontarStock(codpro, cantidad);
+
+                            // Agregar medicamento
+                            document.getElementById('addMedicamentoBtn').addEventListener('click', function() {
+                                event.preventDefault(); //Evita el envío del formulario
+
+                                const newItem = document.createElement('div');
+                                newItem.className = 'medicamentoItem';
+                                newItem.innerHTML = `
+                                    <label for="searchBox">Buscar medicamento:</label>
+                                    <input class="medicamentoInput" type="text" placeholder="Buscar...">
+                                    <div class="resultsDiv"></div>
+                                    <label for="cantidad">Cantidad:</label>
+                                    <input type="number" min="1" value="1">
+                                    <div class="stockDisponible">Stock disponible: 0</div>
+                                `;
+                                document.getElementById('medicamentosContainer').appendChild(newItem);
+
+                                // Asignar eventos al nuevo campo de búsqueda
+                                const newSearchBox = newItem.querySelector('.medicamentoInput');
+                                const newResultsDiv = newItem.querySelector('.resultsDiv');
+                                newSearchBox.addEventListener('input', function() {
+                                    const searchTerm = this.value;
+
+                                    if (searchTerm.length >= 2) {
+                                        fetch(`search1.php?term=${encodeURIComponent(searchTerm)}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                newResultsDiv.innerHTML = '';
+
+                                                data.forEach(item => {
+                                                    const resultItem = document.createElement('div');
+                                                    resultItem.classList.add('autocomplete-item');
+                                                    resultItem.textContent = item.nompro;
+                                                    resultItem.dataset.codpro = item.codpro;
+
+                                                    resultItem.addEventListener('click', function() {
+                                                        newSearchBox.value = item.nompro;
+                                                        newResultsDiv.innerHTML = '';
+                                                        obtenerStock(item.codpro);
+                                                    });
+
+                                                    newResultsDiv.appendChild(resultItem);
+                                                });
+                                            });
+                                    } else {
+                                        newResultsDiv.innerHTML = '';
                                     }
                                 });
                             });
+
+                            function actualizarStockDisponible(codpro, cantidad) {
+                                // Realiza una llamada a un archivo PHP o una API para actualizar el stock
+                                return fetch(`actualizar_stock.php?codpro=${codpro}&cantidad=${cantidad}`, {
+                                    method: 'POST'
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Stock actualizado:', data);
+                                })
+                                .catch(error => console.error('Error al actualizar el stock:', error));
+                            }
+
+                            // Guardar medicamentos y actualizar stock
+                            document.querySelector('.registerbtn').addEventListener('click', function(event) {
+                                event.preventDefault(); // Evita que el formulario se envíe inmediatamente
+                                const items = document.querySelectorAll('.medicamentoItem');
+                                const promises = [];
+
+                                items.forEach(item => {
+                                    const searchBox = item.querySelector('input[type="text"]');
+                                    const cantidad = item.querySelector('input[type="number"]').value;
+
+                                    // Añadir cada promesa de actualización de stock al array
+                                    promises.push(actualizarStockDisponible(searchBox.value, cantidad));
+                                });
+
+                                // Esperar a que todas las actualizaciones del stock se completen antes de enviar el formulario
+                                Promise.all(promises)
+                                    .then(() => {
+                                        console.log('Todos los stocks se han actualizado');
+                                        document.querySelector('form').submit(); // Esto envía el formulario
+                                    })
+                                    .catch(error => console.error('Error en la actualización del stock:', error));
+                            });
+                        });
+                    
                     </script>
 
-
-
-                    <label for="psw"><b>Cantidad</b></label><span class="badge-warning">*</span>
-                    <input type="number" id="cantidad" name="cantidad" min="1" value="1">
-                    <div id="stockDisponible">Stock disponible: 0</div>
-
-
+                    <button id="addMedicamentoBtn">Agregar otro medicamento</button>
                     <hr>
                     <button type="submit" name="add_appointment" class="registerbtn">Guardar</button>
                 </div>
