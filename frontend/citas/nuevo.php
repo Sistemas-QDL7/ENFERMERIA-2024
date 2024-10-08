@@ -232,44 +232,114 @@
                     <label for="psw"><b>Medicamento</b></label><span class="badge-warning">*</span>
                     <input type="text" id="searchBox1" name="appmont" placeholder="Buscar por clave del Medicamento" autocomplete="off">
                     <div id="results1" class="autocomplete-results"></div>
+                    
 
                     <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const searchBox = document.getElementById('searchBox1');
-                        const resultsDiv = document.getElementById('results1');
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const searchBox = document.getElementById('searchBox1');
+                                const resultsDiv = document.getElementById('results1');
+                                const cantidadInput = document.getElementById('cantidad'); // Input para la cantidad
 
-                        searchBox.addEventListener('input', function() {
-                            const searchTerm = searchBox.value;
+                                searchBox.addEventListener('input', function() {
+                                    const searchTerm = searchBox.value;
 
-                            if (searchTerm.length >= 2) { // Empieza la búsqueda después de al menos 2 caracteres
-                                fetch(`search1.php?term=${encodeURIComponent(searchTerm)}`)
+                                    if (searchTerm.length >= 2) {
+                                        fetch(`search1.php?term=${encodeURIComponent(searchTerm)}`)
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                resultsDiv.innerHTML = '';
+
+                                                data.forEach(item => {
+                                                    const resultItem1 = document.createElement('div');
+                                                    resultItem1.classList.add('autocomplete-item');
+                                                    resultItem1.textContent = `${item.nompro}`;
+                                                    resultItem1.dataset.codpro = item.codpro;
+                                                    resultItem1.dataset.stock = item.stock; // Almacena el stock
+
+                                                    resultItem1.addEventListener('click', function() {
+                                                        searchBox.value = item.nompro;
+                                                        resultsDiv.innerHTML = '';
+                                                        
+                                                        // Establecer la cantidad en 1 al seleccionar un medicamento
+                                                        cantidadInput.value = 1; 
+                                                        
+                                                        // Actualizar el stock disponible
+                                                        actualizarStockDisponible(item.stock);
+                                                    });
+
+                                                    resultsDiv.appendChild(resultItem1);
+                                                });
+                                            });
+                                    } else {
+                                        resultsDiv.innerHTML = '';
+                                    }
+                                });
+
+                                // Función para actualizar el stock disponible
+                                function actualizarStockDisponible(stock) {
+                                    const stockDiv = document.getElementById('stockDisponible');
+                                    if (stockDiv) { // Verificar si el elemento existe
+                                        stockDiv.textContent = `Stock disponible: ${stock}`;
+                                    } else {
+                                        console.error("El elemento 'stockDisponible' no se encontró en el DOM.");
+                                    }
+                                }
+
+                                // Agregar un listener al input de cantidad
+                                cantidadInput.addEventListener('input', function() {
+                                    const cantidad = parseInt(cantidadInput.value) || 0;
+                                    const selectedItem = document.querySelector('.autocomplete-item.selected');
+                                    
+                                    if (selectedItem) {
+                                        const stock = parseInt(selectedItem.dataset.stock);
+                                        
+                                        // Comprobar si la cantidad ingresada es válida respecto al stock
+                                        if (cantidad > stock) {
+                                            alert("Cantidad no disponible en stock.");
+                                            cantidadInput.value = stock; // Restablecer a la cantidad máxima disponible
+                                        }
+                                    }
+                                });
+
+                                // Función para descontar stock
+                                function descontarStock(codpro, cantidad) {
+                                    fetch("actualizar_stock.php", {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({ medicamento: codpro, cantidad: cantidad }),
+                                    })
                                     .then(response => response.json())
                                     .then(data => {
-                                        resultsDiv.innerHTML = '';
+                                        if (data.success) {
+                                            console.log(data.message);
+                                        } else {
+                                            console.error(data.message);
+                                        }
+                                    })
+                                    .catch(error => console.error("Error:", error));
+                                }
 
-                                        data.forEach(item => {
-                                            const resultItem1 = document.createElement('div');
-                                            resultItem1.classList.add('autocomplete-item');
-                                            resultItem1.textContent = `${item.nompro}`;
-                                            resultItem1.dataset.codpro = item.codpro;
-
-                                            resultItem1.addEventListener('click', function() {
-                                                searchBox.value = item.nompro;
-                                                resultsDiv.innerHTML = '';
-                                            });
-
-                                            resultsDiv.appendChild(resultItem1);
-                                        });
-                                    });
-                            } else {
-                                resultsDiv.innerHTML = '';
-                            }
-                        });
-                    });
+                                // Llama a descontar stock cuando cambie la cantidad
+                                cantidadInput.addEventListener('change', function() {
+                                    const cantidad = parseInt(cantidadInput.value) || 0;
+                                    const selectedItem = document.querySelector('.autocomplete-item.selected');
+                                    
+                                    if (selectedItem && cantidad > 0) {
+                                        const codpro = selectedItem.dataset.codpro;
+                                        descontarStock(codpro, cantidad);
+                                    }
+                                });
+                            });
                     </script>
 
+
+
                     <label for="psw"><b>Cantidad</b></label><span class="badge-warning">*</span>
-                    <input type="number" id="cant" name="stock" placeholder="Cantidad de unidades del Medicamento" autocomplete="off">
+                    <input type="number" id="cantidad" name="cantidad" min="1" value="1">
+                    <div id="stockDisponible">Stock disponible: 0</div>
+
 
                     <hr>
                     <button type="submit" name="add_appointment" class="registerbtn">Guardar</button>
