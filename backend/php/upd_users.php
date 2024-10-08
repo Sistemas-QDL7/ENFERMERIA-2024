@@ -28,7 +28,7 @@ if(isset($_POST['upd_users']))
         if($query_execute)
         {
             echo '<div class="alert-success">
-  <strong>Success!</strong> Actualizado correctamente &nbsp;<span class="badge-warning">*</span>
+  <strong>Exito!</strong> Usuario actualizado correctamente &nbsp;<span class="badge-warning">*</span>
 </div>';
             exit(0);
         }

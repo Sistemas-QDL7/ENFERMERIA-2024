@@ -1,5 +1,5 @@
 import hashlib
 
-texto = "Qdl01"
+texto = "123"
 hash_md5 = hashlib.md5(texto.encode()).hexdigest()
 print(hash_md5)

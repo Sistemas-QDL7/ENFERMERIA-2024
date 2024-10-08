@@ -7,11 +7,11 @@ require_once('../../backend/bd/Conexion.php');
     $numhs=trim($_POST['nhi']);
     $nompa=trim($_POST['namp']);
     $apepa=trim($_POST['apep']);
-    $direc=trim($_POST['dip']);
+    //$direc=trim($_POST['dip']);
     $sex=trim($_POST['gep']);
     $grup=trim($_POST['grp']);
-    $phon=trim($_POST['telp']);
-    $cump=trim($_POST['cump']);
+    //$phon=trim($_POST['telp']);
+    //$cump=trim($_POST['cump']);
     
    
     
@@ -45,17 +45,17 @@ require_once('../../backend/bd/Conexion.php');
             {
                 if(!isset($errMSG))
   {
-   $stmt = $connect->prepare("INSERT INTO patients(numhs,nompa,apepa,direc,sex, grup, phon,cump,state) VALUES(:numhs,:nompa,:apepa,:direc,:sex,:grup,:phon,:cump, '1')");
+   $stmt = $connect->prepare("INSERT INTO patients(numhs,nompa,apepa,sex, grup,state) VALUES(:numhs,:nompa,:apepa,:sex,:grup, '1')");
 
 
 $stmt->bindParam(':numhs',$numhs);
 $stmt->bindParam(':nompa',$nompa);
 $stmt->bindParam(':apepa',$apepa);
-$stmt->bindParam(':direc',$direc);
+//$stmt->bindParam(':direc',$direc);
 $stmt->bindParam(':sex',$sex);
 $stmt->bindParam(':grup',$grup);
-$stmt->bindParam(':phon',$phon);
-$stmt->bindParam(':cump',$cump);
+//$stmt->bindParam(':phon',$phon);
+//$stmt->bindParam(':cump',$cump);
 
 
    if($stmt->execute())

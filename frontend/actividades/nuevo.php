@@ -41,9 +41,21 @@ if (isset($_POST['add_user'])) {
         ':rol' => $rol,
         ':idodc' => $idodc
     ])) {
-        echo "<script>alert('Usuario registrado exitosamente');</script>";
+        echo '<div id="cookiePopup" class="hide">
+      <img src="../../backend/img/404-tick.png" />
+      <p>
+        Agregado correctamente
+      </p>
+      <button id="acceptCookie" type="button">OK</button>
+    </div>';
     } else {
-        echo "<script>alert('Hubo un error al registrar el usuario');</script>";
+        echo '<div id="cookiePopup" class="hide">
+      <img src="../../backend/img/error.png" />
+      <p>
+        Hubo un error al crear al nuevo usuario
+      </p>
+      <button id="acceptCookie" type="button">OK</button>
+    </div>';
     }
 }
 ?>

@@ -8,6 +8,25 @@
     $id=$_SESSION['id'];
   }
 ?>
+
+<?php
+// Conexión a la base de datos
+try {
+    $connect = new PDO("mysql:host=localhost;dbname=citas_medicas", "root", "");
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Consulta para obtener las áreas
+    $query = "SELECT nombre_area FROM area";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    
+    // Guardar las áreas en un array
+    $areas = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -172,8 +191,8 @@
     <label for="psw"><b>Apellidos</b></label><span class="badge-warning">*</span>
     <input type="text" placeholder="ejm: Ramirez Requena" name="apep" required>
 
-    <label for="psw"><b>Dirección del empleado</b></label><span class="badge-warning">*</span>
-    <input type="text" placeholder="ejm: calle los medanos" name="dip" required>
+    <!--<label for="psw"><b>Dirección del empleado</b></label><span class="badge-warning">*</span>-->
+    <!--<input type="text" placeholder="ejm: calle los medanos" name="dip" required>-->
 
     <label for="psw"><b>Género del empleado</b></label><span class="badge-warning">*</span>
     <select required name="gep" id="gep">
@@ -185,86 +204,20 @@
     <label for="psw"><b>Área</b></label><span class="badge-warning">*</span>
     <select required name="grp" id="grp">
         <option>Seleccione</option>
-        <option value="ACTIVOS FIJOS">ACTIVOS FIJOS</option>
-        <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
-        <option value="ALMACEN DE MATERIAS PRIMAS">ALMACEN DE MATERIAS PRIMAS</option>
-        <option value="ALMACEN DE REFACCIONES">ALMACEN DE REFACCIONES</option>
-        <option value="ALMACEN PST">ALMACEN PST</option>
-        <option value="ALMACEN PST DEVOLUCIONES">ALMACEN PST DEVOLUCIONES</option>
-        <option value="ALMACEN PT">ALMACEN PT</option>
-        <option value="AREA PILOTO">AREA PILOTO</option>
-        <option value="AUTOSERVICIO GENERAL">AUTOSERVICIO GENERAL</option>
-        <option value="BASCULA">BASCULA</option>
-        <option value="CAPITAL HUMANO">CAPITAL HUMANO</option>
-        <option value="CHOFER">CHOFER</option>
-        <option value="COMEDOR">COMEDOR</option>
-        <option value="COMODINES">COMODINES</option>
-        <option value="COMPRAS DIRECTAS">COMPRAS DIRECTAS</option>
-        <option value="COMPRAS INDIRECTAS">COMPRAS INDIRECTAS</option>
-        <option value="COMPRAS MP">COMPRAS MP</option>
-        <option value="CONTRUCCION">CONTRUCCION</option>
-        <option value="CONTROL DE PLAGAS">CONTROL DE PLAGAS</option>
-        <option value="CUBICADO">CUBICADO</option>
-        <option value="CUENTAS POR PAGAR">CUENTAS POR PAGAR</option>
-        <option value="DERIVADOS LACTEOS">DERIVADOS LACTEOS</option>
-        <option value="DESMOLDE">DESMOLDE</option>
-        <option value="DEVOLUCIONES">DEVOLUCIONES</option>
-        <option value="EMBARQUE">EMBARQUE</option>
-        <option value="EMBOLSE">EMBOLSE</option>
-        <option value="EMPAQUE">EMPAQUE</option>
-        <option value="ENFERMERIA">ENFERMERIA</option>
-        <option value="FINANZAS">FINANZAS</option>
-        <option value="GERS">GERS</option>
-        <option value="GESTION DE INVENTARIOS">GESTION DE INVENTARIOS</option>
-        <option value="GESTION DE PROYECTOS">GESTION DE PROYECTOS</option>
-        <option value="INVESTIGACION Y DESARROLLO">INVESTIGACION Y DESARROLLO</option>
-        <option value="LABORATORIO">LABORATORIO</option>
-        <option value="LAVAMOLDES">LAVAMOLDES</option>
-        <option value="LOGISTICA">LOGISTICA</option>
-        <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-        <option value="MERCADOTECNIA">MERCADOTECNIA</option>
-        <option value="MICROBIOLOGIA">MICROBIOLOGIA</option>
-        <option value="MONITOREO">MONITOREO</option>
-        <option value="MONTACARGAS">MONTACARGAS</option>
-        <option value="NOTAS DE CREDITO">NOTAS DE CREDITO</option>
-        <option value="PARTICULARES">PARTICULARES</option>
-        <option value="PLANEACION">PLANEACION</option>
-        <option value="PLANTA PILOTO">PLANTA PILOTO</option>
-        <option value="PREPARACION DE FORMULAS">PREPARACION DE FORMULAS</option>
-        <option value="PUNTO DE VENTA">PUNTO DE VENTA</option>
-        <option value="QUESO AMERICANO">QUESO AMERICANO</option>
-        <option value="QUESO ASADERO">QUESO ASADERO</option>
-        <option value="QUESO CHIHUAHUA">QUESO CHIHUAHUA</option>
-        <option value="QUESO FRESCO">QUESO FRESCO</option>
-        <option value="QUESO PROCESADO">QUESO PROCESADO</option>
-        <option value="QUESO RICO">QUESO RICO</option>
-        <option value="RECEPCION DE LECHE">RECEPCION DE LECHE</option>
-        <option value="RECIBO Y ESTANDARIZACION">RECIBO Y ESTANDARIZACION</option>
-        <option value="RECLUTAMIENTO">RECLUTAMIENTO</option>
-        <option value="RECURSOS HUMANOS">RECURSOS HUMANOS</option>
-        <option value="SABORES ENZIMATICOS">SABORES ENZIMATICOS</option>
-        <option value="SANIDAD AREAS COMUNES">SANIDAD AREAS COMUNES</option>
-        <option value="SANIDAD AREAS DE PRODUCCION">SANIDAD AREAS DE PRODUCCION</option>
-        <option value="SANIDAD EQUIPOS">SANIDAD EQUIPOS</option>
-        <option value="SANIDAD PROCESOS">SANIDAD PROCESOS</option>
-        <option value="SECADOR">SECADOR</option>
-        <option value="SEGURIDAD INDUSTRIAL">SEGURIDAD INDUSTRIAL</option>
-        <option value="SEGURIDAD PATRIMONIAL">SEGURIDAD PATRIMONIAL</option>
-        <option value="SGI">SGI</option>
-        <option value="SISTEMAS TI">SISTEMAS TI</option>
-        <option value="TALLER">TALLER</option>
-        <option value="TERMOENCOGIDO">TERMOENCOGIDO</option>
-        <option value="TJV">TJV</option>
-        <option value="TRANSPORTES">TRANSPORTES</option>
+        <?php foreach($areas as $area): ?>
+        <option value="<?php echo htmlspecialchars($area['nombre_area']); ?>">
+            <?php echo htmlspecialchars($area['nombre_area']); ?>
+        </option>
+    <?php endforeach; ?>
 
 
     </select>
 
-    <label for="psw"><b>Teléfono del empleado</b></label><span class="badge-warning">*</span>
-    <input type="text" maxlength="13" placeholder="ejm: +51 999 888 111" name="telp" required>
+    <!--<label for="psw"><b>Teléfono del empleado</b></label><span class="badge-warning">*</span>-->
+    <!--<input type="text" maxlength="13" placeholder="ejm: +51 999 888 111" name="telp" required>-->
 
-    <label for="psw"><b>Fecha de nacimiento del empleado</b></label><span class="badge-warning">*</span>
-    <input type="date" name="cump" required>
+    <!--<label for="psw"><b>Fecha de nacimiento del empleado</b></label><span class="badge-warning">*</span>-->
+    <!--<input type="date" name="cump" required>-->
 
     <hr>
    

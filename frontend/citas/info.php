@@ -189,29 +189,21 @@ if($sentencia){
         <option><?php echo $d->nompa; ?>&nbsp; <?php echo $d->apepa; ?></option>
     </select>
 
-    <label for="psw"><b>Nombre del médico</b></label><span class="badge-warning">*</span>
+    <label for="psw"><b>Nombre del enfermero</b></label><span class="badge-warning">*</span>
     <select readonly required name="" id="doc">
         <option><?php echo $d->nodoc; ?>&nbsp; <?php echo $d->apdoc; ?></option>
     </select>
 
-    <label for="email"><b>Especialidad del médico</b></label><span class="badge-warning">*</span>
+    <!--<label for="email"><b>Servicio de atención</b></label><span class="badge-warning">*</span>
 
      <select readonly id="spe">
-        <option><?php echo $d->nomesp; ?></option>
-    </select>
+        <option><?//php echo $d->nomesp; ?></option>
+    </select>-->
 
 
-    <label for="psw"><b>Laboratorio</b></label><span class="badge-warning">*</span>
+    <label for="psw"><b>Servicio de atención</b></label><span class="badge-warning">*</span>
     <select required name="" id="lab" readonly>
         <option><?php echo $d->nomlab; ?></option>
-    </select>
-
-    <label for="psw"><b>Color</b></label><span class="badge-warning">*</span>
-    <select required name="appco" id="gep">
-        <option style="color:#CD5C5C;" value="#CD5C5C"><?php echo $d->color; ?></option>
-        
-        
-          
     </select>
 
     <label for="email"><b>Fecha inicial</b></label><span class="badge-warning">*</span>
@@ -219,14 +211,6 @@ if($sentencia){
 
     <label for="email"><b>Fecha final</b></label><span class="badge-warning">*</span>
     <input readonly type="datetime-local" value="<?php echo $d->end; ?>"  name="appfin"required="">
-
-     <label for="email"><b>Monto a pagar</b></label><span class="badge-warning">*</span>
-    <input type="text" readonly placeholder="S/. 0.00"  value="<?php echo $d->monto; ?>" name="appmont" required="" value="0.00">
-
-     <label for="email"><b>Realiza pago</b></label><span class="badge-warning">*</span>
-     <label>SI</label>
-    <input type="checkbox" id="<?=$d->id?>" value="<?=$d->chec ?>" <?=$d->chec == '1' ? 'checked' : '' ;?> name="appreal"   value="1">
-
 
     <hr>
    

@@ -220,10 +220,10 @@ if($sentencia){
                             
                             
                             <form  onsubmit="return confirm('Realmente desea eliminar el registro?');" method='POST' action='<?php $_SERVER['PHP_SELF'] ?>'>
-<input type='hidden' name='id' value="<?php echo  $d->id; ?>">
+                            <input type='hidden' name='id' value="<?php echo  $d->id; ?>">
 
-<button name='delete_patients' style="cursor: pointer;" class="fa fa-trash"></button>
-</form>
+                            <button name='delete_patients' style="cursor: pointer;" class="fa fa-trash"></button>
+                            </form>
 
                             <?php 
                                 if ($d->rol == '1') {
