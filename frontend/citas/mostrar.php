@@ -149,10 +149,10 @@ if($sentencia){
          <table id="example" class="responsive-table">
             <thead>
                 <tr>
-                    <th scope="col">Pacientes</th>
+                    <th scope="col">Paciente</th>
                     <th scope="col">Motivo</th>
-                    <th scope="col">Médico</th>
-                    <th scope="col">Laboratorio</th>
+                    <th scope="col">Atendió</th>
+                    <th scope="col">Servicio de atención</th>
                     <th scope="col">Fecha inicio</th>
                     <th scope="col">Fecha fin</th>
                     <th scope="col">Estado</th>

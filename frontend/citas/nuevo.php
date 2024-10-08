@@ -73,12 +73,6 @@
                 </ul>
             </li>
 
-            
-
-
-            
-
-            
 
             <li>
                 <a href="#"><i class='bx bxs-spray-can icon' ></i> Medicamentos<i class='bx bx-chevron-right icon-right' ></i></a>
@@ -274,7 +268,8 @@
                     });
                     </script>
 
-                    
+                    <label for="psw"><b>Cantidad</b></label><span class="badge-warning">*</span>
+                    <input type="number" id="cant" name="stock" placeholder="Cantidad de unidades del Medicamento" autocomplete="off">
 
                     <hr>
                     <button type="submit" name="add_appointment" class="registerbtn">Guardar</button>

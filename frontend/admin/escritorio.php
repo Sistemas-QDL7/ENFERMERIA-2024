@@ -54,9 +54,9 @@ $events = $req->fetchAll();
             <li><a href="escritorio.php" class="active"><i class='bx bxs-dashboard icon' ></i> Resumen</a></li>
             <li class="divider" data-text="main">Main</li>
             <li>
-                <a href="#"><i class='bx bxs-book-alt icon' ></i> Citas <i class='bx bx-chevron-right icon-right' ></i></a>
+                <a href="#"><i class='bx bxs-book-alt icon' ></i> Consultas <i class='bx bx-chevron-right icon-right' ></i></a>
                 <ul class="side-dropdown">
-                    <li><a href="../citas/mostrar.php">Todas las citas</a></li>
+                    <li><a href="../citas/mostrar.php">Todas las Consultas</a></li>
                     <li><a href="../citas/nuevo.php">Nueva</a></li>
                     
                    
@@ -223,12 +223,12 @@ $events = $req->fetchAll();
                     <div class="head">
                         <div>
                             <?php 
-                                            $sql = "SELECT SUM(monto) total FROM events";
+                                            $sql = "SELECT COUNT(*) AS total_registros FROM events";
                                             $result = $connect->query($sql); //$pdo sería el objeto conexión
                                             $total = $result->fetchColumn();
 
                                              ?>
-                            <h2>S/.<?php echo  $total; ?></h2>
+                            <h2><?php echo  $total; ?></h2> <!-- aqui se puede poner texto en el recuadro-->
                             <p>Citas</p>
                         </div>
                         <i class='bx bx-book-alt icon' ></i>
