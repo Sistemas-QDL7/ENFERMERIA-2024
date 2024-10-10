@@ -3,7 +3,7 @@ require_once('../../backend/bd/Conexion.php');
 
 if (isset($_POST['add_appointment'])) {
     $title = trim($_POST['appnam']);
-    $numhs = trim($_POST['apppac']); // El valor de numhs (número de historia clínica)
+    $numhs = trim($_POST['apppac']); // El valor de NUMERO DE CONTROL
     $idodc = trim($_POST['appdoc']);
     $idlab = trim($_POST['applab']);
     //$color = trim($_POST['appco']);
@@ -44,7 +44,7 @@ if (isset($_POST['add_appointment'])) {
             header('Location: ../../frontend/citas/mostrar.php');
             echo '<script type="text/javascript">
             
-            swal("¡Registrado!", "Se reservó la cita correctamente", "success").then(function() {
+            swal("¡Registrado!", "Se resgistro la consulta correctamente", "success").then(function() {
                 window.location = "../citas/mostrar.php";
             });
             </script>';
@@ -59,7 +59,7 @@ if (isset($_POST['add_appointment'])) {
     } else {
         // Si el numhs no coincide con un paciente, mostrar error
         echo '<script type="text/javascript">
-        swal("Error!", "El número de historia clínica no existe. Verifique el número.", "error").then(function() {
+        swal("Error!", "El número de control no existe. Verifique el número.", "error").then(function() {
             window.location = "nuevo.php";
         });
         </script>';

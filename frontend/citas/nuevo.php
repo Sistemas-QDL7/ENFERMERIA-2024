@@ -231,12 +231,13 @@
                     <div id="medicamentosContainer">
                         <div class="medicamentoItem">
                             <label for="psw"><b>Medicamento</b></label><span class="badge-warning">*</span>
+                            <!--<label for = "searchbox">Buscar medicamento:</label>-->
                             <input type="text" id="searchBox1" name="appmont" class="medicamentoInput" placeholder="Buscar por clave del Medicamento" autocomplete="off">
                             <!--<div id="results1" class="autocomplete-results"></div>-->
                             <div class="resultsDiv"></div>
                             <label for="psw"><b>Cantidad</b></label><span class="badge-warning">*</span>
                             <input type="number" id="cantidad" name="cantidad" min="1" value="1">
-                            <div id="stockDisponible">Stock disponible: 0</div>
+                            <div class="stockDisponible">Stock disponible: 0</div>
                         </div>
                     </div>
 
@@ -278,11 +279,15 @@
 
                             // Función para obtener el stock disponible
                             function obtenerStock(codpro, searchBox) {
+                                console.log('obtenerStock llamada con codpro: ', codpro);
                                 fetch(`obtener_stock.php?codpro=${codpro}`)
                                     .then(response => response.json())
                                     .then(data => {
-                                        const medicamentoItem = searchBox.closest('.medicamentoItem'); //Encuentra el contenedor del medicamento
+                                        console.log('Stock disponible: ', data.stock);
+                                        //const medicamentoItem = searchBox.closest('.medicamentoItem'); //Encuentra el contenedor del medicamento
+                                        const medicamentoItem = searchBox.parentNode; //Encuentra el contenedor del medicamento
                                         const stockDiv = medicamentoItem.querySelector('.stockDisponible');
+                                        console.log('stockDiv:', stockDiv);
                                         if (stockDiv) {
                                             stockDiv.textContent = `Stock disponible: ${data.stock}`;
                                         } else {

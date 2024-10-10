@@ -33,19 +33,19 @@ if(isset($_POST['upd_doctors']))
         if($query_execute)
         {
             echo '<script type="text/javascript">
-swal("Actualizado!", "Actualizado correctamente", "success").then(function() {
-            window.location = "mostrar.php";
-        });
-        </script>';
+            swal("¡Actualizado!", "Actualizado correctamente", "success").then(function() {
+                        window.location = "../medicos/mostrar.php";
+                    });
+                    </script>';
             exit(0);
         }
         else
         {
-           echo '<script type="text/javascript">
-swal("Error!", "Error", "success").then(function() {
-            window.location = "mostrar.php";
-        });
-        </script>';
+            echo '<script type="text/javascript">
+            swal("Error!", "Error al actualizar", "error").then(function() {
+                        window.location = "../medicos/mostrar.php";
+                    });
+                    </script>';
             exit(0);
         }
 

@@ -27,17 +27,20 @@ if(isset($_POST['upd_users']))
 
         if($query_execute)
         {
-            echo '<div class="alert-success">
-  <strong>Exito!</strong> Usuario actualizado correctamente &nbsp;<span class="badge-warning">*</span>
-</div>';
+            echo '<script type="text/javascript">
+            swal("¡Actualizado!", "Actualizado correctamente", "success").then(function() {
+                        window.location = "../actividades/mostrar.php";
+                    });
+                    </script>';
             exit(0);
         }
         else
         {
-           echo '<div class="alert-error">
-  
-  <strong>Error!</strong> No actualizado &nbsp;<span class="badge-warning">*</span>
-</div>';
+            echo '<script type="text/javascript">
+            swal("Error!", "Error al actualizar", "error").then(function() {
+                        window.location = "../actividades/mostrar.php";
+                    });
+                    </script>';
             exit(0);
         }
 

@@ -31,17 +31,20 @@ if(isset($_POST['upd_patiens']))
 
         if($query_execute)
         {
-            echo '<div class="alert-success">
-  <strong>Success!</strong> Actualizado correctamente &nbsp;<span class="badge-warning">*</span>
-</div>';
+            echo '<script type="text/javascript">
+            swal("¡Actualizado!", "Actualizado correctamente", "success").then(function() {
+                        window.location = "../pacientes/mostrar.php";
+                    });
+                    </script>';
             exit(0);
         }
         else
         {
-           echo '<div class="alert-error">
-  
-  <strong>Error!</strong> No actualizado &nbsp;<span class="badge-warning">*</span>
-</div>';
+            echo '<script type="text/javascript">
+           swal("Error!", "Error al actualizar", "error").then(function() {
+                       window.location = "../pacientes/mostrar.php";
+                   });
+                   </script>';
             exit(0);
         }
 

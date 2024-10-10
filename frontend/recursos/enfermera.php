@@ -205,7 +205,7 @@ if($sentencia){
                             <a title="Información" href="../recursos/enfermera_info.php?id=<?php echo $d->idnur ?>" class="fa fa-info"></a>
                            
                             
-                            <form  onsubmit="return confirm('Realmente desea eliminar el registro?');" method='POST' action='<?php $_SERVER['PHP_SELF'] ?>'>
+                            <form  onsubmit="return confirm('¿Realmente desea eliminar el registro?');" method='POST' action='<?php $_SERVER['PHP_SELF'] ?>'>
 <input type='hidden' name='idnur' value="<?php echo  $d->idnur; ?>">
 
 <button name='delete_patients' style="cursor: pointer;" class="fa fa-trash"></button>
