@@ -361,25 +361,42 @@
 
                             // Guardar medicamentos y actualizar stock
                             document.querySelector('.registerbtn').addEventListener('click', function(event) {
-                                event.preventDefault(); // Evita que el formulario se envíe inmediatamente
-                                const items = document.querySelectorAll('.medicamentoItem');
-                                const promises = [];
+                            event.preventDefault(); // Evita que el formulario se envíe inmediatamente
+                            const items = document.querySelectorAll('.medicamentoItem');
+                            const promises = [];
 
-                                items.forEach(item => {
-                                    const searchBox = item.querySelector('input[type="text"]');
-                                    const cantidad = item.querySelector('input[type="number"]').value;
+                            items.forEach(item => {
+                                const searchBox = item.querySelector('input[type="text"]');
+                                const cantidad = item.querySelector('input[type="number"]').value;
 
-                                    // Añadir cada promesa de actualización de stock al array
-                                    promises.push(actualizarStockDisponible(searchBox.value, cantidad));
-                                });
+                                // Añadir cada promesa de actualización de stock al array
+                                promises.push(actualizarStockDisponible(searchBox.value, cantidad));
+                            });
 
-                                // Esperar a que todas las actualizaciones del stock se completen antes de enviar el formulario
-                                Promise.all(promises)
-                                    .then(() => {
-                                        console.log('Todos los stocks se han actualizado');
-                                        document.querySelector('form').submit(); // Esto envía el formulario
-                                    })
-                                    .catch(error => console.error('Error en la actualización del stock:', error));
+                            // Esperar a que todas las actualizaciones del stock se completen antes de enviar el formulario
+                            Promise.all(promises)
+                                .then(() => {
+                                console.log('Todos los stocks se han actualizado');
+                                // Enviar el formulario utilizando AJAX
+                                const formData = new FormData(document.querySelector('form'));
+                                fetch('mostrar.php', {
+                                method: 'POST',
+                                body: formData
+                                })
+                                .then(response => {
+                                if (response.ok) {
+                                    return response.text();
+                                } else {
+                                    throw new Error('Error al enviar el formulario');
+                                }
+                                })
+                                .then(data => {
+                                console.log(data);
+                                // Aquí puedes agregar código para manejar la respuesta del servidor
+                                })
+                                .catch(error => console.error('Error:', error));    
+                                })
+                                .catch(error => console.error('Error en la actualización del stock:', error));
                             });
                         });
                     
